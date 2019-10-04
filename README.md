@@ -9,6 +9,12 @@
 Currently package ydb provides **scheme** and **table** API client
 implementations for YDB.
 
+## Install
+
+```
+go get -u github.com/yandex-cloud/ydb-go-sdk
+```
+
 ## Usage
 
 The straightforward example of querying data may looks similar to this:
