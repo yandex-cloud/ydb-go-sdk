@@ -38,7 +38,7 @@ The straightforward example of querying data may looks similar to this:
 	if err != nil {
 		// handle error
 	}
-	defer s.Close()
+	defer s.Close(ctx)
 
 	// Prepare transaction control for upcoming query execution.
 	// NOTE: result of TxControl() may be reused.
