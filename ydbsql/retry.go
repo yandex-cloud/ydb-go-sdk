@@ -1,7 +1,7 @@
 package ydbsql
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk"
 )
 
 type RetryConfig struct {

@@ -3,7 +3,7 @@ package ydb
 import (
 	"time"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/yandex-cloud/ydb-go-sdk/internal"
 )
 
 type Time time.Time

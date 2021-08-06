@@ -9,7 +9,7 @@ import (
 	"go/types"
 	"strings"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/yandex-cloud/ydb-go-sdk/internal"
 )
 
 func PrimitiveTypeFromString(s string) (t internal.PrimitiveType, err error) {

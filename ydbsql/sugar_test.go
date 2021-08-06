@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk"
 )
 
 func TestDeclaration(t *testing.T) {

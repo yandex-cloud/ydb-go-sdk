@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil"
+	"github.com/yandex-cloud/ydb-go-sdk/timeutil"
 )
 
 var (

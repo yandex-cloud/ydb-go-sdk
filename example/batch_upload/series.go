@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
+	"github.com/yandex-cloud/ydb-go-sdk/connect"
 	"context"
 	"flag"
 	"fmt"
@@ -12,9 +12,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
+	"github.com/yandex-cloud/ydb-go-sdk"
+	"github.com/yandex-cloud/ydb-go-sdk/example/internal/cli"
+	"github.com/yandex-cloud/ydb-go-sdk/table"
 )
 
 type Command struct {

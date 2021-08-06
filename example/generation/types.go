@@ -4,7 +4,7 @@ import (
 	_ "strconv"
 	"time"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/opt"
+	"github.com/yandex-cloud/ydb-go-sdk/opt"
 )
 
 //go:generate ydbgen
