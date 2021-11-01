@@ -98,6 +98,7 @@ func (d *dialer) dial(ctx context.Context, addr string) (_ Driver, err error) {
 	cluster := cluster{
 		dial:  d.dialHostPort,
 		trace: d.config.Trace,
+		index: make(map[connAddr]connEntry),
 	}
 	defer func() {
 		if err != nil {

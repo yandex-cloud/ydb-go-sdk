@@ -77,7 +77,7 @@ func (r *repeater) worker() {
 		case <-r.timer.C():
 
 		case <-r.force:
-			if !r.timer.Stop() {
+			for !r.timer.Stop() {
 				<-r.timer.C()
 			}
 		}
