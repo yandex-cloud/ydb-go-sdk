@@ -158,18 +158,20 @@ func (c *cluster) Get(ctx context.Context) (conn *conn, err error) {
 
 	for {
 		c.mu.RLock()
-		if endpointInfo := ContextEndpointInfo(ctx); endpointInfo != nil {
-			if connEntry, ok := c.index[connAddrFromString(endpointInfo.Address())]; ok && isReady(connEntry.conn) {
-				conn = connEntry.conn
-			}
-		}
-		if conn == nil {
-			conn = c.balancer.Next()
-		}
 		closed := c.closed
 		wait := c.await()
 		ready := c.ready
 		size := len(c.index)
+		if ready > 0 {
+			if endpointInfo := ContextEndpointInfo(ctx); endpointInfo != nil {
+				if connEntry, ok := c.index[connAddrFromString(endpointInfo.Address())]; ok && isReady(connEntry.conn) {
+					conn = connEntry.conn
+				}
+			}
+			if conn == nil {
+				conn = c.balancer.Next()
+			}
+		}
 		c.mu.RUnlock()
 		select {
 		case <-ctx.Done():
