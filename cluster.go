@@ -219,6 +219,7 @@ func (c *cluster) Get(ctx context.Context) (conn *conn, err error) {
 					}
 				}
 				c.mu.Unlock()
+				conn = nil
 			case ready <= 0:
 				if c.explorer != nil {
 					// emit signal for re-discovery
