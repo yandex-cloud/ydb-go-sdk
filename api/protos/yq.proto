@@ -68,6 +68,7 @@ enum StateLoadMode {
     STATE_LOAD_MODE_UNSPECIFIED = 0;
     EMPTY = 1; // Start the query with an empty state
     FROM_LAST_CHECKPOINT = 2; // Start the query with the state that is saved in the last checkpoint
+    FROM_LAST_CHECKPOINT_OFFSETS = 3; // Use offsets of streams from last checkpoint and don't use the other part of checkpoint
 }
 
 // For streaming queries only
@@ -141,6 +142,11 @@ message QueryMeta {
     string last_job_id = 7;
     google.protobuf.Timestamp expire_at = 8;
     google.protobuf.Timestamp result_expire_at = 9;
+    string started_by = 10;
+    oneof action {
+        string aborted_by = 11;
+        string paused_by = 12;
+    }
 }
 
 message BriefQuery {
@@ -185,7 +191,7 @@ message CreateQueryRequest {
     Ydb.Operations.OperationParams operation_params = 1;
     QueryContent content = 2;
     ExecuteMode execute_mode = 3;
-    StreamingDisposition disposition = 4; // Only for streaming queries
+    StreamingDisposition disposition = 4;
     string idempotency_key = 5 [(Ydb.length).le = 1024];
 }
 
@@ -281,7 +287,7 @@ message ModifyQueryRequest {
     QueryContent content = 3;
     ExecuteMode execute_mode = 4;
     StreamingDisposition disposition = 5;
-    StateLoadMode state_mode = 6;
+    StateLoadMode state_load_mode = 6;
     int64 previous_revision = 7 [(Ydb.value) = ">= 0"];
     string idempotency_key = 8 [(Ydb.length).le = 1024];
 }
