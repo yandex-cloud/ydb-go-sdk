@@ -1,3 +1,6 @@
+## 2.11.1
+* Added custom dns-resolver to grpc options for use dns-balancing
+
 ## 2.11.0
 * Added possibility to override `x-ydb-database` metadata value
 

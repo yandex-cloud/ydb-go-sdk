@@ -281,6 +281,11 @@ func (d *dialer) grpcDialOptions() (opts []grpc.DialOption) {
 			Timeout:             d.timeout,
 			PermitWithoutStream: true,
 		}),
+		grpc.WithResolvers(
+			newResolver(""),
+			newResolver("grpc"),
+			newResolver("grpcs"),
+		),
 		grpc.WithDefaultServiceConfig(`{"loadBalancingConfig": [{"round_robin":{}}]}`),
 	)
 	opts = append(opts, grpc.WithDefaultCallOptions(
