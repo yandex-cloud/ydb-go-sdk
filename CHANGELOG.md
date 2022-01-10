@@ -1,3 +1,6 @@
+## 2.11.2
+* Fixed resetting internal timers
+
 ## 2.11.1
 * Added custom dns-resolver to grpc options for use dns-balancing
 

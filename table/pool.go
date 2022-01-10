@@ -647,17 +647,13 @@ func (p *SessionPool) keeper() {
 		timer = timeutil.NewTimer(p.IdleThreshold)
 	)
 
+	defer timer.Stop()
+
 	for {
 		var now time.Time
 		select {
 		case <-wake:
 			wake = make(chan struct{})
-			if !timer.Stop() {
-				select {
-				case <-timer.C():
-				default:
-				}
-			}
 			timer.Reset(p.IdleThreshold)
 			continue
 

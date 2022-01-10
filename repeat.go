@@ -87,17 +87,18 @@ func (r *repeater) Force() {
 }
 
 func (r *repeater) worker() {
-	defer close(r.done)
+	defer func() {
+		r.timer.Stop()
+		close(r.done)
+	}()
 	for {
 		select {
 		case <-r.stop:
 			return
 		case <-r.timer.C():
-
+			// pass
 		case <-r.force:
-			if !r.timer.Stop() {
-				<-r.timer.C()
-			}
+			// pass
 		}
 		r.timer.Reset(r.interval)
 		ctx := r.ctx
