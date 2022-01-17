@@ -68,7 +68,6 @@ enum StateLoadMode {
     STATE_LOAD_MODE_UNSPECIFIED = 0;
     EMPTY = 1; // Start the query with an empty state
     FROM_LAST_CHECKPOINT = 2; // Start the query with the state that is saved in the last checkpoint
-    FROM_LAST_CHECKPOINT_OFFSETS = 3; // Use offsets of streams from last checkpoint and don't use the other part of checkpoint
 }
 
 // For streaming queries only
@@ -553,6 +552,18 @@ message DeleteConnectionResponse {
 }
 
 message DeleteConnectionResult {
+}
+
+message TestConnectionRequest {
+    Ydb.Operations.OperationParams operation_params = 1;
+    ConnectionSetting setting = 2;
+}
+
+message TestConnectionResponse {
+    Ydb.Operations.Operation operation = 1; // TestConnectionResult
+}
+
+message TestConnectionResult {
 }
 
 // ResultSet API
