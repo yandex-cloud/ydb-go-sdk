@@ -1,6 +1,6 @@
 SET(
     api_spec_relative_dir
-    kikimr/public/api
+    ydb/public/api
 )
 SET(
     api_spec_root

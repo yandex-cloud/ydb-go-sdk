@@ -4,16 +4,16 @@
 // Since same namespace used for both service and proto model files (grpc/draft and proto dirs).
 // it will emit an error:
 // kikimr/public/sdk/go/ydb/internal/cmd/make/make -import="/arcadia /arcadia/contrib/libs/protobuf/src"
-//	-source="/arcadia/kikimr/public/api/protos /arcadia/kikimr/public/api/grpc/draft"
-//	-source-base=~/arcadia -strip=~/arcadia/kikimr/public/api
+//	-source="/arcadia/ydb/public/api/protos /arcadia/ydb/public/api/grpc/draft"
+//	-source-base=~/arcadia -strip=~/arcadia/ydb/public/api
 //	-destination=kikimr/public/sdk/go/ydb/api
 //	-repository=github.com/yandex-cloud/ydb-go-sdk/v2/api
 //	-compiler=contrib/tools/protoc/protoc
 //	-custom=kikimr/public/sdk/go/ydb/internal/cmd/protoc-gen/protoc-gen
 //	-plugins=ydb
 // warning: ignoring pacakge "Ydb.PersQueue.V1" because it belongs to at least these two directories:
-//  /arcadia/kikimr/public/api/protos
-//  /arcadia/kikimr/public/api/grpc/draft
+//  /arcadia/ydb/public/api/protos
+//  /arcadia/ydb/public/api/grpc/draft
 // TODO: Fix after LOGBROKER-6598
 
 package Ydb_PersQueue_V1
