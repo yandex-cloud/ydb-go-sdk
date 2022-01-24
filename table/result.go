@@ -58,6 +58,8 @@ func (r *Result) SetCount() int {
 }
 
 // RowCount returns the number of rows among the all result sets.
+// Deprecated: RowCount with multiple result sets from different queries are misleads
+// Instead - must iterate over result sets and ask SetRowCount() for each current result set
 func (r *Result) RowCount() (n int) {
 	for _, s := range r.sets {
 		n += len(s.Rows)
