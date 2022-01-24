@@ -20,13 +20,13 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// IssueMessage is a transport format for yql/public/issue library
+// IssueMessage is a transport format for ydb/library/yql/public/issue library
 type IssueMessage struct {
 	Position    *IssueMessage_Position `protobuf:"bytes,1,opt,name=position,proto3" json:"position,omitempty"`
 	Message     string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	EndPosition *IssueMessage_Position `protobuf:"bytes,3,opt,name=end_position,json=endPosition,proto3" json:"end_position,omitempty"`
 	IssueCode   uint32                 `protobuf:"varint,4,opt,name=issue_code,json=issueCode,proto3" json:"issue_code,omitempty"`
-	// Severity values from yql/public/issue/protos/issue_severity.proto
+	// Severity values from ydb/library/yql/public/issue/protos/issue_severity.proto
 	// FATAL = 0;
 	// ERROR = 1;
 	// WARNING = 2;
