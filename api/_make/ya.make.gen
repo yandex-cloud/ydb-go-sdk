@@ -19,6 +19,20 @@ ELSE()
     SET(exe_ext)
 ENDIF()
 
+# Disclaimer:
+# -----------
+# The generator below scans entire ${api_spec_dirs} and reads all files there regardless of PEERDIRs.
+# In order to correctly construct dependincies of this action we shall enlist entire content
+# of these directories as INPUT. This macro collects all needed files in configure time to avoid missing
+# dependencies.
+#
+# This all is an ugly hack: the proper generator shall not read files beyound needed and
+# shall take list of needed files as input instead of directory. Also it shall not steal files,
+# it shall use files provided via EXT_PROTO. The only excuse for existense of this generator
+# is legacy and deprecation: the new API is already provided and this one is deprecated and eventually 
+# will cease to exist
+COLLECT_YDB_API_SPECS_LEGACY(all_api_spec_files ${api_spec_dirs})
+
 RUN_PROGRAM(
     kikimr/public/sdk/go/ydb/internal/cmd/make
     -import="${protobuf_import_dirs}"
@@ -33,7 +47,7 @@ RUN_PROGRAM(
 
     TOOL contrib/tools/protoc
     TOOL kikimr/public/sdk/go/ydb/internal/cmd/protoc-gen
-    IN ${api_spec_files}
+    IN ${all_api_spec_files}
     OUT ${api_generated_files}
     CWD ${ARCADIA_BUILD_ROOT}
 )
