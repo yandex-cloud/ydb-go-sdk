@@ -1,15 +1,17 @@
 package result
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 	"bytes"
 	"io"
 	"reflect"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
+
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
 )
 
 type rawConverter struct {

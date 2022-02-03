@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"text/tabwriter"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
 )
 
 func doSelect(
@@ -17,7 +17,7 @@ func doSelect(
 	prefix string,
 	args ...string,
 ) error {
-	const query = `
+	const query = `--!syntax_v1
 		PRAGMA TablePathPrefix("%s");
 
 		DECLARE $minViews AS Uint64;
@@ -68,7 +68,7 @@ func doSelectJoin(
 	prefix string,
 	args ...string,
 ) error {
-	const query = `
+	const query = `--!syntax_v1
         PRAGMA TablePathPrefix("%s");
 
         DECLARE $userName AS Utf8;

@@ -7,11 +7,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb_Table"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/cache/lru"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
+
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal/cache/lru"
 )
 
 // Deprecated: use server-side query cache with keep-in-memory flag control instead

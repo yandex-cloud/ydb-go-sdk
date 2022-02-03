@@ -1,15 +1,15 @@
 package main
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
 	"context"
 	"flag"
 	"fmt"
 	"os"
 	"strings"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
 )
 
 var actions = map[string]func(context.Context, *table.SessionPool, string, ...string) error{

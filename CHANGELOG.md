@@ -1,3 +1,6 @@
+# 2.12.0
+* Replaced package `api` to `github.com/ydb-platform/ydb-go-genproto`
+
 ## 2.11.2
 * Fixed resetting internal timers
 

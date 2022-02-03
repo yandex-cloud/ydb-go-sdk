@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
 	"bytes"
 	"context"
 	"flag"
@@ -19,7 +19,7 @@ type templateConfig struct {
 	TablePathPrefix string
 }
 
-var fill = template.Must(template.New("fill database").Parse(`
+var fill = template.Must(template.New("fill database").Parse(`--!syntax_v1
 PRAGMA TablePathPrefix("{{ .TablePathPrefix }}");
 
 DECLARE $seriesData AS List<Struct<
@@ -243,7 +243,7 @@ func describeTableOptions(ctx context.Context, sp *table.SessionPool) (err error
 
 func selectSimple(ctx context.Context, sp *table.SessionPool, prefix string) (err error) {
 	query := render(
-		template.Must(template.New("").Parse(`
+		template.Must(template.New("").Parse(`--!syntax_v1
 			PRAGMA TablePathPrefix("{{ .TablePathPrefix }}");
 			DECLARE $seriesID AS Uint64;
 			$format = DateTime::Format("%Y-%m-%d");
@@ -311,7 +311,7 @@ func selectSimple(ctx context.Context, sp *table.SessionPool, prefix string) (er
 
 func scanQuerySelect(ctx context.Context, sp *table.SessionPool, prefix string) (err error) {
 	query := render(
-		template.Must(template.New("").Parse(`
+		template.Must(template.New("").Parse(`--!syntax_v1
 			PRAGMA TablePathPrefix("{{ .TablePathPrefix }}");
 
 			DECLARE $series AS List<UInt64>;

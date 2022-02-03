@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
 )
 
 // SessionProvider is the interface that holds session lifecycle logic.

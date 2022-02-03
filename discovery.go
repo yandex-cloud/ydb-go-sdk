@@ -6,9 +6,10 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb_Discovery"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb_Operations"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Discovery"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Operations"
+
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
 )
 
 type Endpoint struct {

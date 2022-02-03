@@ -1,7 +1,7 @@
 package connect
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/scheme"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/scheme"
 	"context"
 )
 

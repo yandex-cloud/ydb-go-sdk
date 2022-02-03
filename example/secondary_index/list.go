@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"text/tabwriter"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
 )
 
 func doList(
@@ -90,7 +90,7 @@ func doListViews(
 }
 
 func listByID(ctx context.Context, sp *table.SessionPool, prefix string, limit uint64) (res *table.Result, err error) {
-	query := fmt.Sprintf(`
+	query := fmt.Sprintf(`--!syntax_v1
         PRAGMA TablePathPrefix("%v");
 
         DECLARE $limit AS Uint64;
@@ -119,7 +119,7 @@ func listByID(ctx context.Context, sp *table.SessionPool, prefix string, limit u
 
 func listByIDSeries(ctx context.Context, sp *table.SessionPool, prefix string, limit, lastSeries uint64,
 ) (res *table.Result, err error) {
-	query := fmt.Sprintf(`
+	query := fmt.Sprintf(`--!syntax_v1
         PRAGMA TablePathPrefix("%v");
 
         DECLARE $limit AS Uint64;
@@ -151,7 +151,7 @@ func listByIDSeries(ctx context.Context, sp *table.SessionPool, prefix string, l
 
 func listByViews(ctx context.Context, sp *table.SessionPool, prefix string, limit uint64,
 ) (res *table.Result, err error) {
-	query := fmt.Sprintf(`
+	query := fmt.Sprintf(`--!syntax_v1
 		PRAGMA TablePathPrefix("%v");
 
         DECLARE $limit AS Uint64;
@@ -187,7 +187,7 @@ func listByViews(ctx context.Context, sp *table.SessionPool, prefix string, limi
 
 func listByViewsSeries(ctx context.Context, sp *table.SessionPool, prefix string, limit, lastSeries, lastViews uint64,
 ) (res *table.Result, err error) {
-	query := fmt.Sprintf(`
+	query := fmt.Sprintf(`--!syntax_v1
         PRAGMA TablePathPrefix("%v");
 
         DECLARE $limit AS Uint64;

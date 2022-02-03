@@ -1,15 +1,15 @@
 package main
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
 	"context"
 	"flag"
 	"fmt"
 	"path"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
 )
 
 type Command struct {
@@ -64,7 +64,7 @@ func selectPaging(
 	ctx context.Context, sp *table.SessionPool, prefix string, limit int, lastNum *int, lastCity *string) (
 	empty bool, err error) {
 
-	var query = fmt.Sprintf(`
+	var query = fmt.Sprintf(`--!syntax_v1
 		PRAGMA TablePathPrefix("%v");
 
 		DECLARE $limit AS Uint64;
@@ -125,7 +125,7 @@ func selectPaging(
 }
 
 func fillTableWithData(ctx context.Context, sp *table.SessionPool, prefix string) (err error) {
-	var query = fmt.Sprintf(`
+	var query = fmt.Sprintf(`--!syntax_v1
 		PRAGMA TablePathPrefix("%v");
 
 		DECLARE $schoolsData AS List<Struct<

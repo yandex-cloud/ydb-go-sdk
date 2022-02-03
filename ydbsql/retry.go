@@ -1,7 +1,7 @@
 package ydbsql
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
 	"context"
 	"time"
 )

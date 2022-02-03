@@ -3,9 +3,10 @@ package coordination
 import (
 	"context"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb_Coordination"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/scheme"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Coordination"
+
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/scheme"
 )
 
 type ConsistencyMode uint

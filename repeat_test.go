@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil/timetest"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/timeutil"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/timeutil/timetest"
 )
 
 func TestRepeater(t *testing.T) {

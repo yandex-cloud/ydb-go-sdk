@@ -1,7 +1,6 @@
 package table
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/cache/lru"
 	"context"
 	"errors"
 	"github.com/stretchr/testify/require"
@@ -11,12 +10,14 @@ import (
 
 	"github.com/golang/protobuf/proto"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb_Scheme"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb_Table"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/testutil"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Scheme"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
+
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal/cache/lru"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/testutil"
 )
 
 func TestSessionKeepAlive(t *testing.T) {

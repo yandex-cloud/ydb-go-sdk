@@ -1,15 +1,18 @@
 package result
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 	"encoding/binary"
-	"github.com/stretchr/testify/assert"
 	"math/rand"
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
+
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
 )
 
 func valueFromPrimitiveTypeID(c *column) (*Ydb.Value, interface{}) {

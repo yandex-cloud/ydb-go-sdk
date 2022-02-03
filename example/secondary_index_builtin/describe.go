@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"path"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
 )
 
 func doDescribe(

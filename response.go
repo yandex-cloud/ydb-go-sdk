@@ -1,6 +1,6 @@
 package ydb
 
-import "github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+import "a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
 
 type Response = internal.Response
 

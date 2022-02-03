@@ -10,8 +10,9 @@ import (
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/duration"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/api/protos/Ydb_Operations"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Operations"
+
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/timeutil"
 )
 
 type (

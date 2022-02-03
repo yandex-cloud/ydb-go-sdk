@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
 	"context"
 	"flag"
 	"fmt"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
 )
 
 type Command struct {

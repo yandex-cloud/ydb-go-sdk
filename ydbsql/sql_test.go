@@ -7,17 +7,16 @@ import (
 	"io"
 	"log"
 	"os"
+	"reflect"
 	"testing"
 	"time"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/traceutil"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/testutil"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal/traceutil"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/testutil"
 )
 
 // Interface checks.
@@ -135,7 +134,7 @@ func TestIsolationMapping(t *testing.T) {
 			if test.txExp != nil {
 				sExp = table.TxSettings(test.txExp)
 			}
-			if !cmp.Equal(sAct, sExp, cmp.Comparer(proto.Equal), cmp.AllowUnexported(table.TransactionSettings{})) {
+			if !reflect.DeepEqual(sExp, sAct) {
 				t.Fatalf("unexpected tx settings: %+v; want %+v", sAct, sExp)
 			}
 
@@ -146,7 +145,7 @@ func TestIsolationMapping(t *testing.T) {
 			if test.txcExp != nil {
 				cExp = table.TxControl(test.txcExp...)
 			}
-			if !cmp.Equal(sAct, sExp, cmp.Comparer(proto.Equal), cmp.AllowUnexported(table.TransactionSettings{})) {
+			if !reflect.DeepEqual(sExp, sAct) {
 				t.Fatalf("unexpected settings: %+v; want %+v", cAct, cExp)
 			}
 		})

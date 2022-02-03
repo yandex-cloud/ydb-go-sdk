@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
 )
 
 func doUpdate(
@@ -38,7 +38,7 @@ func doUpdate(
 
 func updateTransaction(ctx context.Context, sp *table.SessionPool, prefix string, seriesID,
 	newViews uint64) (count uint64, err error) {
-	query := fmt.Sprintf(`
+	query := fmt.Sprintf(`--!syntax_v1
         PRAGMA TablePathPrefix("%v");
 
         DECLARE $seriesId AS Uint64;

@@ -1,6 +1,6 @@
 package tests
 
-import "github.com/yandex-cloud/ydb-go-sdk/v2/opt"
+import "a.yandex-team.ru/kikimr/public/sdk/go/ydb/opt"
 
 //ydb:generate value,scan,params,type
 type Optional struct {
