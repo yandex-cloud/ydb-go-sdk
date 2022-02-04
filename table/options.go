@@ -4,8 +4,8 @@ import (
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 )
 
 func WithShardKeyBounds() DescribeTableOption {

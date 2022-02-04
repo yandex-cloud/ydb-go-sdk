@@ -1,7 +1,7 @@
 package main
 
 import (
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
 	"context"
 	"flag"
 	"fmt"
@@ -9,10 +9,10 @@ import (
 	"path"
 	"time"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/opt"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/opt"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 )
 
 var (
@@ -74,7 +74,7 @@ func (cmd *Command) Run(ctx context.Context, params cli.Parameters) error {
 		return err
 	}
 	{
-		const fill = `--!syntax_v1
+		const fill = `
 			DECLARE $users AS List<Struct<
 				id: Uint64?,
 				username: Utf8?,
@@ -109,7 +109,7 @@ func (cmd *Command) Run(ctx context.Context, params cli.Parameters) error {
 		}
 	}
 	{
-		const insert = `--!syntax_v1
+		const insert = `
 			DECLARE $id AS Uint64?;
 			DECLARE $username AS Utf8?;
 			DECLARE $mode AS Uint64?;
@@ -139,7 +139,7 @@ func (cmd *Command) Run(ctx context.Context, params cli.Parameters) error {
 		}
 	}
 	{
-		const query = `--!syntax_v1
+		const query = `
 			SELECT * FROM users;`
 
 		stmt, err := session.Prepare(ctx, withPragma(params.Prefix(), query))
@@ -162,7 +162,7 @@ func (cmd *Command) Run(ctx context.Context, params cli.Parameters) error {
 		}
 	}
 	{
-		const query = `--!syntax_v1
+		const query = `
 			SELECT
 				magic,
 				AGGREGATE_LIST(username)

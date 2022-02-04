@@ -12,8 +12,8 @@ import (
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Operations"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/timeutil"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil"
 )
 
 type driver struct {

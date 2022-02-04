@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 )
 
 func doInsert(
@@ -14,7 +14,7 @@ func doInsert(
 	prefix string,
 	args ...string,
 ) error {
-	const query = `--!syntax_v1
+	const query = `
 		PRAGMA TablePathPrefix("%s");
 
 		DECLARE $seriesData AS List<Struct<

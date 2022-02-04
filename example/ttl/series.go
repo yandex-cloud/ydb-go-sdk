@@ -1,16 +1,16 @@
 package main
 
 import (
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
 	"context"
 	"flag"
 	"fmt"
 	"math/rand"
 	"path"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 )
 
 const (
@@ -125,7 +125,7 @@ func readExpiredBatchTransaction(ctx context.Context, sp *table.SessionPool, pre
 	timestamp, prevTimestamp, prevDocID uint64) (*table.Result,
 	error) {
 
-	query := fmt.Sprintf(`--!syntax_v1
+	query := fmt.Sprintf(`
 		PRAGMA TablePathPrefix("%v");
 
 		DECLARE $timestamp AS Uint64;
@@ -182,7 +182,7 @@ func readExpiredBatchTransaction(ctx context.Context, sp *table.SessionPool, pre
 }
 
 func deleteDocumentWithTimestamp(ctx context.Context, sp *table.SessionPool, prefix string, queue, lastDocID, timestamp uint64) error {
-	query := fmt.Sprintf(`--!syntax_v1
+	query := fmt.Sprintf(`
 		PRAGMA TablePathPrefix("%v");
 
 		DECLARE $doc_id AS Uint64;
@@ -245,7 +245,7 @@ func deleteExpired(ctx context.Context, sp *table.SessionPool, prefix string, qu
 func readDocument(ctx context.Context, sp *table.SessionPool, prefix, url string) error {
 	fmt.Printf("> ReadDocument \"%v\":\n", url)
 
-	query := fmt.Sprintf(`--!syntax_v1
+	query := fmt.Sprintf(`
 		PRAGMA TablePathPrefix("%v");
 
         DECLARE $url AS Utf8;
@@ -300,7 +300,7 @@ func addDocument(ctx context.Context, sp *table.SessionPool, prefix, url, html s
 	fmt.Printf("> AddDocument: \n\tUrl: %v\n\tTimestamp: %v\n", url, timestamp)
 
 	queue := rand.Intn(ExpirationQueueCount)
-	query := fmt.Sprintf(`--!syntax_v1
+	query := fmt.Sprintf(`
 		PRAGMA TablePathPrefix("%v");
 
 		DECLARE $url AS Utf8;

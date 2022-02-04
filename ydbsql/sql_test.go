@@ -13,10 +13,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal/traceutil"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/testutil"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/traceutil"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/testutil"
 )
 
 // Interface checks.

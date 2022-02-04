@@ -6,7 +6,7 @@ import (
 	"io"
 	"time"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 )
 
 // Type describes YDB data type.

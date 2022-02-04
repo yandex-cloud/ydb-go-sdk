@@ -12,7 +12,7 @@ import (
 
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Operations"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/timeutil"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil"
 )
 
 type (

@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 )
 
 func doGenerate(
@@ -57,7 +57,7 @@ func doGenerate(
 
 func insertSeriesWorker(ctx context.Context, sp *table.SessionPool, prefix string, jobs <-chan Series,
 	err chan<- error) {
-	query := fmt.Sprintf(`--!syntax_v1
+	query := fmt.Sprintf(`
         PRAGMA TablePathPrefix("%v");
 
 		DECLARE $seriesId AS Uint64;

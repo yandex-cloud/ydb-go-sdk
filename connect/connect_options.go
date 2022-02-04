@@ -1,8 +1,8 @@
 package connect
 
 import (
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/auth/iam"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/auth/iam"
 	"context"
 	"fmt"
 	"time"

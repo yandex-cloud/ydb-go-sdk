@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
 )
 
 func seriesData(id uint64, released uint32, title, info, comment string) ydb.Value {

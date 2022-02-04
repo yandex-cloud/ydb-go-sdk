@@ -6,8 +6,8 @@ import (
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_TableStats"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal/result"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/result"
 )
 
 // Result is a result of a query.

@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal/stats"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/stats"
 )
 
 type conn struct {

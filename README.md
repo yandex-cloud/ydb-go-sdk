@@ -2,7 +2,7 @@
 
 > YDB API client written in Go.
 
-[godoc](https://godoc.yandex-team.ru/pkg/a.yandex-team.ru/kikimr/public/sdk/go/ydb/)
+[godoc](https://godoc.org/github.com/yandex-cloud/ydb-go-sdk/v2/)
 
 ## Table of contents
 1. [Overview](#Overview)
@@ -54,7 +54,7 @@ Requires Go 1.13 or later.
 ## Installation <a name="Installation"></a>
 
 ```
-go get -u a.yandex-team.ru/kikimr/public/sdk/go/ydb
+go get -u github.com/yandex-cloud/ydb-go-sdk/v2
 ```
 
 ## Usage <a name="Usage"></a>
@@ -191,7 +191,7 @@ passing values to prepare query. There is an **experimental** tool named
 #### Installation ydbgen <a name="ydbgen-install"></a>
 
 ```
-go get -u a.yandex-team.ru/kikimr/public/sdk/go/ydb/cmd/ydbgen
+go get -u github.com/yandex-cloud/ydb-go-sdk/v2/cmd/ydbgen
 ```
 
 ### Usage ydbgen <a name="ydbgen-usage"></a>
@@ -316,7 +316,7 @@ There is special package called `ydb/opt` for this purposes:
 ```go
 package main
 
-import "a.yandex-team.ru/kikimr/public/sdk/go/ydb/opt"
+import "github.com/yandex-cloud/ydb-go-sdk/v2/opt"
 
 //go:generate ydbgen
 

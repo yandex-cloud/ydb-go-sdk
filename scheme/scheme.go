@@ -5,8 +5,8 @@ import (
 
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Scheme"
 
-	ydb "a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
+	ydb "github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 )
 
 type EntryType uint

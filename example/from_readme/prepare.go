@@ -1,8 +1,8 @@
 package main
 
 import (
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 	"bytes"
 	"context"
 	"fmt"
@@ -10,7 +10,7 @@ import (
 	"text/template"
 	"time"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
 )
 
 type templateConfig struct {

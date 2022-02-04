@@ -1,8 +1,8 @@
 package main
 
 import (
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
 	"bytes"
 	"context"
 	"flag"
@@ -10,11 +10,11 @@ import (
 	"log"
 	"text/template"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 )
 
-var query = template.Must(template.New("fill database").Parse(`--!syntax_v1
+var query = template.Must(template.New("fill database").Parse(`
 	DECLARE $var AS Variant<Utf8,Uint64,Uint32>;
 
 	$struct = AsStruct(

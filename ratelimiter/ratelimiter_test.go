@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/coordination"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal/traceutil"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/coordination"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/traceutil"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 )
 
 const (

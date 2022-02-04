@@ -1,14 +1,14 @@
 package main
 
 import (
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
 	"context"
 	"flag"
 	"fmt"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 )
 
 type Command struct {
@@ -54,7 +54,7 @@ func (cmd *Command) Run(ctx context.Context, params cli.Parameters) error {
 	// transaction during execution, but as said above, transaction is commited
 	// for us and we do not want to do anything with it.
 	_, res, err := s.Execute(ctx, txc,
-		`--!syntax_v1
+		`
 			DECLARE $mystr AS Utf8?;
 
 			SELECT 42 as id, $mystr as mystr;

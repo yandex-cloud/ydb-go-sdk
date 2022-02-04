@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/timeutil"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil"
 )
 
 func TestOperationParams(t *testing.T) {

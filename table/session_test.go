@@ -14,10 +14,10 @@ import (
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Scheme"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal/cache/lru"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/testutil"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/cache/lru"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/testutil"
 )
 
 func TestSessionKeepAlive(t *testing.T) {

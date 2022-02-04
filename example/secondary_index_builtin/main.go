@@ -1,6 +1,6 @@
 package main
 
-import "a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
+import "github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
 
 func main() {
 	cli.Run(new(Command))

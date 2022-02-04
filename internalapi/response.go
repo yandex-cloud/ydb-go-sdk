@@ -1,8 +1,8 @@
 // Deprecated: file was moved to ydb package
-// To use it, rename the import to a.yandex-team.ru/kikimr/public/sdk/go/ydb
+// To use it, rename the import to github.com/yandex-cloud/ydb-go-sdk/v2
 package internalapi
 
-import "a.yandex-team.ru/kikimr/public/sdk/go/ydb/internal"
+import "github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 
 type Response = internal.Response
 

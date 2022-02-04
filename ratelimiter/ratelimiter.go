@@ -5,7 +5,7 @@ import (
 
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_RateLimiter"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
 )
 
 type HierarchicalDrrSettings struct {

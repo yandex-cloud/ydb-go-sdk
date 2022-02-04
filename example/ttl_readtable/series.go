@@ -1,15 +1,15 @@
 package main
 
 import (
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/connect"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
 	"context"
 	"flag"
 	"fmt"
 	"path"
 
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/example/internal/cli"
-	"a.yandex-team.ru/kikimr/public/sdk/go/ydb/table"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 )
 
 const (
@@ -170,7 +170,7 @@ func deleteExpiredDocuments(ctx context.Context, sp *table.SessionPool, prefix s
 	timestamp uint64) error {
 	fmt.Printf("> DeleteExpiredDocuments: %+v\n", ids)
 
-	query := fmt.Sprintf(`--!syntax_v1
+	query := fmt.Sprintf(`
 		PRAGMA TablePathPrefix("%v");
 
 		DECLARE $keys AS List<Struct<
@@ -296,7 +296,7 @@ func deleteExpired(ctx context.Context, sp *table.SessionPool, prefix string, ti
 func readDocument(ctx context.Context, sp *table.SessionPool, prefix, url string) error {
 	fmt.Printf("> ReadDocument \"%v\":\n", url)
 
-	query := fmt.Sprintf(`--!syntax_v1
+	query := fmt.Sprintf(`
 		PRAGMA TablePathPrefix("%v");
 
 		DECLARE $url AS Utf8;
@@ -349,7 +349,7 @@ func readDocument(ctx context.Context, sp *table.SessionPool, prefix, url string
 func addDocument(ctx context.Context, sp *table.SessionPool, prefix, url, html string, timestamp uint64) error {
 	fmt.Printf("> AddDocument: \n\tUrl: %v\n\tTimestamp: %v\n", url, timestamp)
 
-	query := fmt.Sprintf(`--!syntax_v1
+	query := fmt.Sprintf(`
 		PRAGMA TablePathPrefix("%v");
 
 		DECLARE $url AS Utf8;
