@@ -1,3 +1,6 @@
+# This repository was deprecated. 
+# Latest ydb-go-sdk develops in https://github.com/ydb-platform/ydb-go-sdk
+
 # ydb
 
 > YDB API client written in Go.
