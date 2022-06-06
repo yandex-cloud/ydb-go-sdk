@@ -71,5 +71,5 @@ func (t *Time) FromTzTimestamp(x string) error {
 type Duration time.Duration
 
 func (d Duration) Interval() int64 {
-	return internal.MarshalInterval(time.Duration(d))
+	return internal.DurationToMicroseconds(time.Duration(d))
 }

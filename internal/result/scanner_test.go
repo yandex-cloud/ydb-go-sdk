@@ -246,7 +246,7 @@ func valueFromPrimitiveTypeID(c *column) (*Ydb.Value, interface{}) {
 				Int64Value: v,
 			},
 		}
-		src := internal.UnmarshalInterval(v)
+		src := internal.DurationFromMicroseconds(v)
 		if c.optional && !c.testDefault {
 			vp := &src
 			return ydbval, &vp

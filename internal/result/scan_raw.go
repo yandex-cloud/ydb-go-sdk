@@ -32,7 +32,7 @@ func (s *rawConverter) Timestamp() (v time.Time) {
 }
 func (s *rawConverter) Interval() (v time.Duration) {
 	s.unwrap()
-	return internal.UnmarshalInterval(s.int64())
+	return internal.DurationFromMicroseconds(s.int64())
 }
 func (s *rawConverter) TzDate() (v time.Time) {
 	s.unwrap()

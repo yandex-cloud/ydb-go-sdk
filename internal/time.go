@@ -19,13 +19,12 @@ var (
 	unix = time.Unix(0, 0)
 )
 
-// Up to ±292 years.
-func UnmarshalInterval(n int64) time.Duration {
-	return time.Duration(n)
+func DurationFromMicroseconds(n int64) time.Duration {
+	return time.Duration(n) * time.Microsecond
 }
 
-func MarshalInterval(d time.Duration) int64 {
-	return int64(d)
+func DurationToMicroseconds(d time.Duration) int64 {
+	return int64(d / time.Microsecond)
 }
 
 // Up to 11761191-01-20 00:00:00 +0000 UTC.

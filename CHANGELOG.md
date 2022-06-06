@@ -1,3 +1,9 @@
+# 2.12.1
+* Fixed bug with convert ydb value to `time.Duration` in `result.Scan[WithDefaults]()`
+* Fixed bug with make ydb value from `time.Duration`
+* Marked `ydb.IntervalValue` as deprecated
+* Added `ydb.IntervalValueFromMicroseconds`
+
 # 2.12.0
 * Replaced package `api` to `github.com/ydb-platform/ydb-go-genproto`
 

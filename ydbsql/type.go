@@ -80,7 +80,7 @@ func (d *Interval) Scan(x interface{}) error {
 	if !ok {
 		return convertError(v, x)
 	}
-	*d = Interval(internal.UnmarshalInterval(v))
+	*d = Interval(internal.DurationFromMicroseconds(v))
 	return nil
 }
 
