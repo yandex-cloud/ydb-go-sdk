@@ -17,7 +17,7 @@ func BenchmarkTestScanWithColumns(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		for res.NextRow() {
-			res.Scan(&row.id, &row.title, &row.date)
+			_ = res.Scan(&row.id, &row.title, &row.date)
 		}
 	}
 }
@@ -29,7 +29,7 @@ func BenchmarkTestScan(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		if res.NextRow() {
-			res.Scan(&row.id, &row.title, &row.date)
+			_ = res.Scan(&row.id, &row.title, &row.date)
 		}
 	}
 }
@@ -37,16 +37,15 @@ func BenchmarkTestScan(b *testing.B) {
 func BenchmarkTestDeprecatedNext(b *testing.B) {
 	b.ReportAllocs()
 	res := PrepareScannerPerformanceTest(b.N)
-	row := series{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		if res.NextRow() {
 			res.NextItem()
-			row.id = res.OUint64()
+			_ = res.OUint64()
 			res.NextItem()
-			row.title = res.OUTF8()
+			_ = res.OUTF8()
 			res.NextItem()
-			row.date = internal.UnmarshalDatetime(res.ODatetime())
+			_ = internal.UnmarshalDatetime(res.ODatetime())
 		}
 	}
 }
@@ -54,16 +53,15 @@ func BenchmarkTestDeprecatedNext(b *testing.B) {
 func BenchmarkTestDeprecatedSeek(b *testing.B) {
 	b.ReportAllocs()
 	res := PrepareScannerPerformanceTest(b.N)
-	row := series{}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		if res.NextRow() {
 			res.SeekItem("series_id")
-			row.id = res.OUint64()
+			_ = res.OUint64()
 			res.SeekItem("title")
-			row.title = res.OUTF8()
+			_ = res.OUTF8()
 			res.SeekItem("release_date")
-			row.date = internal.UnmarshalDatetime(res.ODatetime())
+			_ = internal.UnmarshalDatetime(res.ODatetime())
 		}
 	}
 }
@@ -98,6 +96,7 @@ func TestOverallSliceApproaches(t *testing.T) {
 }
 
 func BenchmarkTestSliceReduce(b *testing.B) {
+	//nolint:S1019
 	var c = make([]*column, testSize, testSize)
 	for j := 0; j < testSize; j++ {
 		c[j] = &column{}
@@ -115,6 +114,7 @@ func BenchmarkTestSliceReduce(b *testing.B) {
 }
 
 func BenchmarkTestSliceIncrement(b *testing.B) {
+	//nolint:S1019
 	var slice = make([]*column, testSize, testSize)
 	for j := 0; j < testSize; j++ {
 		slice[j] = &column{}
@@ -133,6 +133,7 @@ func BenchmarkTestSliceIncrement(b *testing.B) {
 }
 
 func BenchmarkTestTempValue(b *testing.B) {
+	//nolint:S1019
 	var slice = make([]*column, testSize, testSize)
 	for j := 0; j < testSize; j++ {
 		slice[j] = &column{}
@@ -148,6 +149,7 @@ func BenchmarkTestTempValue(b *testing.B) {
 }
 
 func BenchmarkTestDoubleIndex(b *testing.B) {
+	//nolint:S1019
 	var slice = make([]*column, testSize, testSize)
 	for j := 0; j < testSize; j++ {
 		slice[j] = &column{}

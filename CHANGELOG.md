@@ -1,3 +1,6 @@
+# 2.12.2
+* Fixed path of experimental protobuf's
+
 # 2.12.1
 * Fixed bug with convert ydb value to `time.Duration` in `result.Scan[WithDefaults]()`
 * Fixed bug with make ydb value from `time.Duration`

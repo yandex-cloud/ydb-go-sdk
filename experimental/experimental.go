@@ -5,10 +5,10 @@ import (
 	"context"
 
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Experimental"
 
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/pb/protos/Ydb_Experimental"
 )
 
 type Client struct {

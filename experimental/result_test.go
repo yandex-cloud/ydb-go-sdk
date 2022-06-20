@@ -4,7 +4,8 @@ import (
 	"testing"
 
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Experimental"
+
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/pb/protos/Ydb_Experimental"
 )
 
 func TestResultAny(t *testing.T) {
