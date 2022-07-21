@@ -1,14 +1,14 @@
 module github.com/yandex-cloud/ydb-go-sdk/v2
 
-go 1.13
+go 1.18
 
 require (
-	github.com/golang-jwt/jwt v3.2.1+incompatible
+	github.com/golang-jwt/jwt/v4 v4.4.1
 	github.com/golang/protobuf v1.5.2
-	github.com/google/go-cmp v0.5.6
-	github.com/stretchr/testify v1.7.0
-	github.com/yandex-cloud/go-genproto v0.0.0-20210809082946-a97da516c588
-	github.com/ydb-platform/ydb-go-genproto v0.0.0-20220203104745-929cf9c248bc
-	google.golang.org/grpc v1.39.0
-	google.golang.org/protobuf v1.27.1
+	github.com/google/go-cmp v0.5.8
+	github.com/stretchr/testify v1.7.1
+	github.com/yandex-cloud/go-genproto v0.0.0-20220718095639-7971ba320057
+	github.com/ydb-platform/ydb-go-genproto v0.0.0-20220714135712-e42a12bea566
+	google.golang.org/grpc v1.47.0
+	google.golang.org/protobuf v1.28.0
 )

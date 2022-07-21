@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"sync/atomic"
 
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
@@ -30,11 +31,24 @@ type conn struct {
 
 	idle bool
 
+	closed int32
+
 	tx  *table.Transaction
 	txc *table.TransactionControl
 }
 
+func (c *conn) onClose() {
+	atomic.StoreInt32(&c.closed, 1)
+}
+
+func (c *conn) isClosed() bool {
+	return atomic.LoadInt32(&c.closed) != 0
+}
+
 func (c *conn) ResetSession(ctx context.Context) error {
+	if c.isClosed() {
+		return driver.ErrBadConn
+	}
 	if c.idle {
 		return nil
 	}
@@ -43,10 +57,15 @@ func (c *conn) ResetSession(ctx context.Context) error {
 }
 
 func (c *conn) PrepareContext(ctx context.Context, query string) (driver.Stmt, error) {
+	if c.isClosed() {
+		return nil, driver.ErrBadConn
+	}
+
 	s, err := c.session.Prepare(ctx, query)
 	if err != nil {
 		return nil, mapBadSessionError(err)
 	}
+
 	return &stmt{
 		conn: c,
 		stmt: s,
@@ -98,6 +117,9 @@ func txIsolationOrControl(opts driver.TxOptions) (isolation table.TxOption, cont
 }
 
 func (c *conn) BeginTx(ctx context.Context, opts driver.TxOptions) (tx driver.Tx, err error) {
+	if c.isClosed() {
+		return nil, driver.ErrBadConn
+	}
 	if c.tx != nil || c.txc != nil {
 		return nil, ErrActiveTransaction
 	}
@@ -120,6 +142,10 @@ func (c *conn) BeginTx(ctx context.Context, opts driver.TxOptions) (tx driver.Tx
 // Rollback implements driver.Tx interface.
 // Note that it is called by driver even if a user did not called it.
 func (c *conn) Rollback() error {
+	if c.isClosed() {
+		return driver.ErrBadConn
+	}
+
 	if c.tx == nil && c.txc == nil {
 		return ErrNoActiveTransaction
 	}
@@ -135,6 +161,10 @@ func (c *conn) Rollback() error {
 }
 
 func (c *conn) Commit() error {
+	if c.isClosed() {
+		return driver.ErrBadConn
+	}
+
 	if c.tx == nil && c.txc == nil {
 		return ErrNoActiveTransaction
 	}
@@ -150,6 +180,9 @@ func (c *conn) Commit() error {
 }
 
 func (c *conn) ExecContext(ctx context.Context, query string, args []driver.NamedValue) (driver.Result, error) {
+	if c.isClosed() {
+		return nil, driver.ErrBadConn
+	}
 	_, err := c.exec(ctx, &reqQuery{text: query}, params(args))
 	if err != nil {
 		return nil, err
@@ -158,6 +191,9 @@ func (c *conn) ExecContext(ctx context.Context, query string, args []driver.Name
 }
 
 func (c *conn) QueryContext(ctx context.Context, query string, args []driver.NamedValue) (_ driver.Rows, err error) {
+	if c.isClosed() {
+		return nil, driver.ErrBadConn
+	}
 	if ContextScanQueryMode(ctx) {
 		// Allow to use scanQuery only through QueryContext API.
 		return c.scanQueryContext(ctx, query, args)
@@ -188,6 +224,9 @@ func (c *conn) CheckNamedValue(v *driver.NamedValue) error {
 }
 
 func (c *conn) Ping(ctx context.Context) error {
+	if c.isClosed() {
+		return driver.ErrBadConn
+	}
 	_, err := c.session.KeepAlive(ctx)
 	return mapBadSessionError(err)
 }
@@ -330,6 +369,9 @@ func (d TxDoer) Do(ctx context.Context, f TxOperationFunc) (err error) {
 			return
 		}
 		m := rc.RetryChecker.Check(err)
+		if !m.MustDeleteSession() {
+			return mapBadSessionError(err)
+		}
 		if !m.MustRetry(retryNoIdempotent) {
 			return mapBadSessionError(err)
 		}
@@ -403,6 +445,9 @@ func (s *stmt) CheckNamedValue(v *driver.NamedValue) error {
 }
 
 func (s *stmt) ExecContext(ctx context.Context, args []driver.NamedValue) (driver.Result, error) {
+	if s.conn.isClosed() {
+		return nil, driver.ErrBadConn
+	}
 	_, err := s.conn.exec(ctx, &reqStmt{stmt: s.stmt}, params(args))
 	if err != nil {
 		return nil, err
@@ -411,6 +456,9 @@ func (s *stmt) ExecContext(ctx context.Context, args []driver.NamedValue) (drive
 }
 
 func (s *stmt) QueryContext(ctx context.Context, args []driver.NamedValue) (driver.Rows, error) {
+	if s.conn.isClosed() {
+		return nil, driver.ErrBadConn
+	}
 	if ContextScanQueryMode(ctx) {
 		// Allow to use scanQuery only through QueryContext API.
 		return s.scanQueryContext(ctx, args)
@@ -632,20 +680,3 @@ type result struct{}
 
 func (r result) LastInsertId() (int64, error) { return 0, ErrUnsupported }
 func (r result) RowsAffected() (int64, error) { return 0, ErrUnsupported }
-
-func mapBadSessionError(err error) error {
-	if err == nil {
-		return nil
-	}
-	m := (&ydb.RetryChecker{}).Check(err)
-	switch {
-	case
-		m.MustDeleteSession(),
-		ydb.IsOpError(err, ydb.StatusOverloaded),
-		ydb.IsOpError(err, ydb.StatusUnavailable),
-		ydb.IsTransportError(err, ydb.TransportErrorResourceExhausted):
-		return driver.ErrBadConn
-	default:
-		return err
-	}
-}

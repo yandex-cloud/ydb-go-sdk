@@ -1,3 +1,8 @@
+# 2.12.3
+* Added listening of session close event in ysbsql
+* Added early exit from ydbsql calls if session already closed
+* Added wrapping driver.ErrBadConn for go1.18 clients
+
 # 2.12.2
 * Fixed path of experimental protobuf's
 

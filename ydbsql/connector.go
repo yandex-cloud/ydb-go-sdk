@@ -265,10 +265,12 @@ func (c *connector) Connect(ctx context.Context) (_ driver.Conn, err error) {
 			if s == nil {
 				panic("ydbsql: abnormal result of pool.Create()")
 			}
-			return &conn{
+			cc := &conn{
 				connector: c,
 				session:   s,
-			}, nil
+			}
+			s.OnClose(cc.onClose)
+			return cc, nil
 		}
 		m := ydb.DefaultRetryChecker.Check(err)
 		if !m.MustRetry(true) {
