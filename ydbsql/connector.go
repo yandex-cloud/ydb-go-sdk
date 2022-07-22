@@ -35,6 +35,14 @@ func WithClient(client *table.Client) ConnectorOption {
 	}
 }
 
+func WithCreateSessionTimeout(timeout time.Duration) ConnectorOption {
+	return func(c *connector) {
+		c.mu.Lock()
+		c.createSessionTimeout = timeout
+		c.mu.Unlock()
+	}
+}
+
 func WithEndpoint(addr string) ConnectorOption {
 	return func(c *connector) {
 		c.endpoint = addr
@@ -190,6 +198,7 @@ func Connector(opts ...ConnectorOption) driver.Connector {
 			),
 			table.CommitTx(),
 		),
+		createSessionTimeout: table.DefaultSessionPoolCreateSessionTimeout,
 	}
 	for _, opt := range opts {
 		opt(c)
@@ -204,8 +213,9 @@ type connector struct {
 
 	clientTrace table.ClientTrace
 
-	mu     sync.RWMutex
-	client *table.Client
+	mu                   sync.RWMutex
+	client               *table.Client
+	createSessionTimeout time.Duration
 
 	retryConfig      RetryConfig
 	defaultTxControl *table.TransactionControl
@@ -247,6 +257,20 @@ func (c *connector) dial(ctx context.Context) (*table.Client, error) {
 	}, nil
 }
 
+func (c *connector) connectAttempt(ctx context.Context) (s *table.Session, err error) {
+	if err = ctx.Err(); err != nil {
+		return nil, err
+	}
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+	if c.createSessionTimeout != 0 {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, c.createSessionTimeout)
+		defer cancel()
+	}
+	return c.client.CreateSession(ctx)
+}
+
 func (c *connector) Connect(ctx context.Context) (_ driver.Conn, err error) {
 	if err = c.init(ctx); err != nil {
 		return nil, err
@@ -258,9 +282,7 @@ func (c *connector) Connect(ctx context.Context) (_ driver.Conn, err error) {
 		if err = ctx.Err(); err != nil {
 			return nil, err
 		}
-		c.mu.RLock()
-		s, err = c.client.CreateSession(ctx)
-		c.mu.RUnlock()
+		s, err = c.connectAttempt(ctx)
 		if err == nil {
 			if s == nil {
 				panic("ydbsql: abnormal result of pool.Create()")

@@ -1,3 +1,6 @@
+# 2.12.4
+* Added `ysbsql.WithCreateSessionTimeout(time.Duration)` connector option
+
 # 2.12.3
 * Added listening of session close event in ysbsql
 * Added early exit from ydbsql calls if session already closed
