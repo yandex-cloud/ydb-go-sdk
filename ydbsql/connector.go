@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql/driver"
 	"fmt"
+	"io"
 	"sync"
 	"time"
 
@@ -306,6 +307,13 @@ func (c *connector) Connect(ctx context.Context) (_ driver.Conn, err error) {
 
 func (c *connector) Driver() driver.Driver {
 	return &Driver{c}
+}
+
+var _ io.Closer = &connector{}
+
+func (c *connector) Close() error {
+	d := Driver{c}
+	return d.Close()
 }
 
 func (c *connector) unwrap(ctx context.Context) (*table.Client, error) {

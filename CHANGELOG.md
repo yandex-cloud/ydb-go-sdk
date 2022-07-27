@@ -1,8 +1,11 @@
+# 2.12.5
+* Implements `io.Closer` interface for `ydbsql.connector` type (implicit requirement for `database/sql` drivers)
+
 # 2.12.4
-* Added `ysbsql.WithCreateSessionTimeout(time.Duration)` connector option
+* Added `ydbsql.WithCreateSessionTimeout(time.Duration)` connector option
 
 # 2.12.3
-* Added listening of session close event in ysbsql
+* Added listening of session close event in ydbsql
 * Added early exit from ydbsql calls if session already closed
 * Added wrapping driver.ErrBadConn for go1.18 clients
 
