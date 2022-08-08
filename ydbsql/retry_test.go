@@ -225,3 +225,56 @@ func TestTxDoerStmt(t *testing.T) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 }
+
+func TestTxDoerWrappedBadConn(t *testing.T) {
+	var count int
+	b := DriverBuilder{
+		Error: func(_ context.Context, method testutil.MethodCode) (err error) {
+			if method != testutil.TablePrepareDataQuery {
+				return nil
+			}
+			defer func() { count++ }()
+			if count == 1 {
+				err = &ydb.TransportError{
+					Reason: ydb.TransportErrorDeadlineExceeded,
+				}
+			}
+			return
+		},
+		Logf: t.Logf,
+	}
+	driver := b.Build()
+
+	db := sql.OpenDB(Connector(
+		WithSessionPoolIdleThreshold(time.Hour),
+		WithClient(&table.Client{
+			Driver: driver,
+		}),
+	))
+	if err := db.Ping(); err != nil {
+		t.Fatal(err)
+	}
+
+	db.SetMaxOpenConns(10)
+	db.SetMaxIdleConns(10)
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	var counter int
+
+	// Try to prepare statement on second session, which must fail due to our
+	// stub logic above.
+	err := DoTx(ctx, db, func(ctx context.Context, tx *sql.Tx) error {
+		counter++
+		if counter < db.Driver().(*Driver).c.retryConfig.MaxRetries {
+			return &ydb.OpError{
+				Reason: ydb.StatusAborted,
+			}
+		}
+		return nil
+	})
+	if err != nil && counter >= db.Driver().(*Driver).c.retryConfig.MaxRetries {
+		t.Fatal(err)
+	}
+}

@@ -266,7 +266,7 @@ func (c *conn) exec(ctx context.Context, req processor, params *table.QueryParam
 		m = rc.RetryChecker.Check(err)
 
 		if m.MustDeleteSession() {
-			return nil, driver.ErrBadConn
+			return nil, mapBadSessionError(err)
 		}
 		if !m.MustRetry(retryNoIdempotent) {
 			break
@@ -358,20 +358,20 @@ type TxDoer struct {
 //       return rows.Err()
 //   }))
 func (d TxDoer) Do(ctx context.Context, f TxOperationFunc) (err error) {
-	rc := d.RetryConfig
+	var (
+		rc = d.RetryConfig
+		i  int
+	)
 	retryNoIdempotent := ydb.IsOperationIdempotent(ctx)
 	if rc == nil {
 		rc = &d.DB.Driver().(*Driver).c.retryConfig
 	}
-	for i := 0; i <= rc.MaxRetries; i++ {
+	for ; i <= rc.MaxRetries; i++ {
 		err = d.do(ctx, f)
 		if err == nil {
 			return
 		}
 		m := rc.RetryChecker.Check(err)
-		if !m.MustDeleteSession() {
-			return mapBadSessionError(err)
-		}
 		if !m.MustRetry(retryNoIdempotent) {
 			return mapBadSessionError(err)
 		}
@@ -379,7 +379,9 @@ func (d TxDoer) Do(ctx context.Context, f TxOperationFunc) (err error) {
 			break
 		}
 	}
-	return mapBadSessionError(err)
+	return mapBadSessionError(
+		fmt.Errorf("retry tx operation failed after %d attempts: %v", i, err),
+	)
 }
 
 func (d TxDoer) do(ctx context.Context, f TxOperationFunc) error {

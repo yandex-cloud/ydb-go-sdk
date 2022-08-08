@@ -1,3 +1,6 @@
+# 2.12.6
+* Removed early exit from `ydbsql.TxDoer` on `retry.Mode.MustDeleteSession()` case
+
 # 2.12.5
 * Implements `io.Closer` interface for `ydbsql.connector` type (implicit requirement for `database/sql` drivers)
 
