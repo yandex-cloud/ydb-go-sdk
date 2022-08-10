@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	sql.Register("ydb", new(legacyDriver))
+	sql.Register("ydb/v2", new(legacyDriver))
 }
 
 type legacyDriver struct {

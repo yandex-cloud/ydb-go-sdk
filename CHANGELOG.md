@@ -1,3 +1,6 @@
+# 2.12.8
+* Renamed `database/sql` driver name from `ydb` to `ydb/v2` for exclude driver names collision 
+
 # 2.12.7
 * Fixed bug in `scheme.Entry.from()`
 

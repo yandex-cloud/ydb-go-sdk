@@ -24,7 +24,7 @@ database initialization via sql.Open() function:
 	import "database/sql"
 
 	func main() {
-		db, err := sql.Open("ydb", "ydb://endpoint/database?auth-token=secret")
+		db, err := sql.Open("ydb/v2", "ydb://endpoint/database?auth-token=secret")
 	}
 
 That is, data source name must be a welformed URL, with scheme "ydb", host for
