@@ -108,10 +108,11 @@ func (c *Client) DescribePath(ctx context.Context, path string) (e Entry, err er
 	_, err = c.Driver.Call(ctx, internal.Wrap(
 		"/Ydb.Scheme.V1.SchemeService/DescribePath", &req, &res,
 	))
-	if err == nil {
-		e.from(res.Self)
+	if err != nil {
+		return e, err
 	}
-	return e, err
+	e.from(res.Self)
+	return
 }
 
 func (c *Client) ModifyPermissions(ctx context.Context, path string, opts ...PermissionsOption) (err error) {
@@ -143,7 +144,7 @@ func (e *Entry) from(y *Ydb_Scheme.Entry) {
 		Owner:                y.Owner,
 		Type:                 entryType(y.Type),
 		Permissions:          p[0:n],
-		EffectivePermissions: p[n:m],
+		EffectivePermissions: p[n : n+m],
 	}
 }
 

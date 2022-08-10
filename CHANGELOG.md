@@ -1,3 +1,6 @@
+# 2.12.7
+* Fixed bug in `scheme.Entry.from()`
+
 # 2.12.6
 * Removed early exit from `ydbsql.TxDoer` on `retry.Mode.MustDeleteSession()` case
 
