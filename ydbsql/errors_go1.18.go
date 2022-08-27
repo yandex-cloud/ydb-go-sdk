@@ -5,6 +5,7 @@ package ydbsql
 
 import (
 	"database/sql/driver"
+	"errors"
 
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 )
@@ -14,11 +15,19 @@ type badConnError struct {
 }
 
 func (e badConnError) Error() string {
-	return "ydbsql: bad connection: " + e.err.Error()
+	return "ydbsql: " + e.err.Error()
 }
 
-func (e badConnError) Unwrap() error {
-	return driver.ErrBadConn
+func (e badConnError) Is(err error) bool {
+	//nolint:errorlint
+	if err == driver.ErrBadConn {
+		return true
+	}
+	return errors.Is(e.err, err)
+}
+
+func (e badConnError) As(target interface{}) bool {
+	return errors.As(e.err, target)
 }
 
 func mapBadSessionError(err error) error {
@@ -36,4 +45,12 @@ func mapBadSessionError(err error) error {
 	default:
 		return err
 	}
+}
+
+func unwrapErrBadConn(err error) error {
+	var e *badConnError
+	if errors.As(err, &e) {
+		return e.err
+	}
+	return err
 }

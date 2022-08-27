@@ -5,6 +5,9 @@ package ydbsql
 
 import (
 	"database/sql/driver"
+	"errors"
+
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
 )
 
 func mapBadSessionError(err error) error {
@@ -22,4 +25,13 @@ func mapBadSessionError(err error) error {
 	default:
 		return err
 	}
+}
+
+func unwrapErrBadConn(err error) error {
+	if errors.Is(err, driver.ErrBadConn) {
+		return &ydb.OpError{
+			Reason: ydb.StatusBadSession,
+		}
+	}
+	return err
 }

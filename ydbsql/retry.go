@@ -1,9 +1,12 @@
 package ydbsql
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"context"
+	"database/sql"
+	"fmt"
 	"time"
+
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
 )
 
 type RetryConfig struct {
@@ -53,4 +56,83 @@ func backoff(ctx context.Context, m ydb.RetryMode, rc *RetryConfig, i int) error
 		}
 	}
 	return ydb.WaitBackoff(ctx, b, i)
+}
+
+type TxOperationFunc func(context.Context, *sql.Tx) error
+
+// TxDoer contains options for retrying transactions.
+type TxDoer struct {
+	DB      *sql.DB
+	Options *sql.TxOptions
+
+	// RetryConfig allows to override retry parameters from DB.
+	RetryConfig *RetryConfig
+}
+
+// Do starts a transaction and calls f with it. If f() call returns a retryable
+// error, it repeats it accordingly to retry configuration that TxDoer's DB
+// driver holds.
+//
+// Note that callers should mutate state outside of f carefully and keeping in
+// mind that f could be called again even if no error returned – transaction
+// commitment can be failed:
+//
+//   var results []int
+//   ydbsql.DoTx(ctx, db, TxOperationFunc(func(ctx context.Context, tx *sql.Tx) error {
+//       // Reset resulting slice to prevent duplicates when retry occured.
+//       results = results[:0]
+//
+//       rows, err := tx.QueryContext(...)
+//       if err != nil {
+//           // handle error
+//       }
+//       for rows.Next() {
+//           results = append(results, ...)
+//       }
+//       return rows.Err()
+//   }))
+func (d TxDoer) Do(ctx context.Context, f TxOperationFunc) (err error) {
+	var (
+		rc = d.RetryConfig
+		i  int
+	)
+	retryNoIdempotent := ydb.IsOperationIdempotent(ctx)
+	if rc == nil {
+		rc = &d.DB.Driver().(*Driver).c.retryConfig
+	}
+	for ; i <= rc.MaxRetries; i++ {
+		err = d.do(ctx, f)
+		if err == nil {
+			return
+		}
+		m := rc.RetryChecker.Check(unwrapErrBadConn(err))
+		if !m.MustRetry(retryNoIdempotent) {
+			return err
+		}
+		if e := backoff(ctx, m, rc, i); e != nil {
+			break
+		}
+	}
+	return fmt.Errorf("retry tx operation failed after %d attempts: %v", i, err)
+}
+
+func (d TxDoer) do(ctx context.Context, f TxOperationFunc) error {
+	tx, err := d.DB.BeginTx(ctx, d.Options)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = tx.Rollback()
+	}()
+	err = f(ctx, tx)
+	if err != nil {
+		return err
+	}
+	return tx.Commit()
+}
+
+// DoTx is a shortcut for calling Do(ctx, f) on initialized TxDoer with DB
+// field set to given db.
+func DoTx(ctx context.Context, db *sql.DB, f TxOperationFunc) error {
+	return (TxDoer{DB: db}).Do(ctx, f)
 }

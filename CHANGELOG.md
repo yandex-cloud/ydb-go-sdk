@@ -1,3 +1,6 @@
+# 2.12.9
+* Refactored wrapping and unwrapping `driver.ErrBadConn` for `ydbsql` package
+
 # 2.12.8
 * Renamed `database/sql` driver name from `ydb` to `ydb/v2` for exclude driver names collision
 
