@@ -2,7 +2,6 @@ package internal
 
 import (
 	"github.com/golang/protobuf/proto"
-
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Issue"
 )

@@ -5,12 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"google.golang.org/grpc/metadata"
-
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/duration"
-
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Operations"
+	"google.golang.org/grpc/metadata"
 
 	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil"
 )

@@ -3,13 +3,12 @@ package table
 import (
 	"context"
 	"errors"
-	"github.com/stretchr/testify/require"
 	"reflect"
 	"testing"
 	"time"
 
 	"github.com/golang/protobuf/proto"
-
+	"github.com/stretchr/testify/require"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Scheme"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"

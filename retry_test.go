@@ -3,10 +3,11 @@ package ydb
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc"
 	"math/rand"
 	"testing"
 	"time"
+
+	"google.golang.org/grpc"
 )
 
 func TestLogBackoff(t *testing.T) {

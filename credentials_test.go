@@ -2,8 +2,9 @@ package ydb
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestCredentialsString(t *testing.T) {

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
 	"context"
 	"flag"
 	"fmt"
 
+	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
 )
 

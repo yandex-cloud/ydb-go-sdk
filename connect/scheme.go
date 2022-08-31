@@ -1,8 +1,9 @@
 package connect
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/scheme"
 	"context"
+
+	"github.com/yandex-cloud/ydb-go-sdk/v2/scheme"
 )
 
 type schemeWrapper struct {

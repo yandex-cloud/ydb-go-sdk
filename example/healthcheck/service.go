@@ -1,9 +1,6 @@
 package main
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 	"bytes"
 	"context"
 	"crypto/tls"
@@ -15,6 +12,10 @@ import (
 	"sync"
 	"text/template"
 	"time"
+
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/connect"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 )
 
 func render(t *template.Template, data interface{}) string {

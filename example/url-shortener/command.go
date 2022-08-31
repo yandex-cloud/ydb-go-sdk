@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
 	"context"
 	"flag"
 	"fmt"
 	"net/http"
 	"strconv"
+
+	"github.com/yandex-cloud/ydb-go-sdk/v2/example/internal/cli"
 )
 
 type Command struct {

@@ -1,8 +1,9 @@
 package result
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 	"testing"
+
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 )
 
 var (

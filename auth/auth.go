@@ -1,11 +1,12 @@
 package auth
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
-	"github.com/yandex-cloud/ydb-go-sdk/v2/auth/iam"
 	"context"
 	"fmt"
 	"os"
+
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/auth/iam"
 )
 
 // FromEnviron returns default credentials from environ

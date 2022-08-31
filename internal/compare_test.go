@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	structpb "github.com/golang/protobuf/ptypes/struct"
-
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 )
 

@@ -2,10 +2,10 @@ package ydb
 
 import (
 	"context"
-	"github.com/golang/protobuf/proto"
-	"google.golang.org/grpc"
 
+	"github.com/golang/protobuf/proto"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
+	"google.golang.org/grpc"
 
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 )

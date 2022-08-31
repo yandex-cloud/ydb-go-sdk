@@ -3,8 +3,9 @@
 package internalapi
 
 import (
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 	"github.com/golang/protobuf/proto"
+
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 )
 
 type Operation = internal.Operation

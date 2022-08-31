@@ -6,10 +6,9 @@ import (
 	"strconv"
 	"strings"
 
-	grpccodes "google.golang.org/grpc/codes"
-
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Issue"
+	grpccodes "google.golang.org/grpc/codes"
 )
 
 type Issue struct {

@@ -2,9 +2,10 @@ package ydb
 
 import (
 	"context"
+	"testing"
+
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/metadata"
-	"testing"
 )
 
 func TestMetaRequiredHeaders(t *testing.T) {
