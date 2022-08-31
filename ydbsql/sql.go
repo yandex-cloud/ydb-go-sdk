@@ -31,18 +31,18 @@ type conn struct {
 
 	idle bool
 
-	closed uint64
+	closed int32
 
 	tx  *table.Transaction
 	txc *table.TransactionControl
 }
 
 func (c *conn) setClosed() {
-	atomic.StoreUint64(&c.closed, 1)
+	atomic.StoreInt32(&c.closed, 1)
 }
 
 func (c *conn) isClosed() bool {
-	return atomic.LoadUint64(&c.closed) != 0
+	return atomic.LoadInt32(&c.closed) != 0
 }
 
 func (c *conn) ResetSession(ctx context.Context) error {
