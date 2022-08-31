@@ -1,3 +1,6 @@
+# 2.12.10
+* Fixed error description in `ydbsql.TxDoer.Do`
+
 # 2.12.9
 * Refactored wrapping and unwrapping `driver.ErrBadConn` for `ydbsql` package
 

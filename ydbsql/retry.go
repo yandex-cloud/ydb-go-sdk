@@ -93,8 +93,9 @@ type TxDoer struct {
 //   }))
 func (d TxDoer) Do(ctx context.Context, f TxOperationFunc) (err error) {
 	var (
-		rc = d.RetryConfig
-		i  int
+		rc    = d.RetryConfig
+		i     int
+		start = time.Now()
 	)
 	retryNoIdempotent := ydb.IsOperationIdempotent(ctx)
 	if rc == nil {
@@ -107,13 +108,17 @@ func (d TxDoer) Do(ctx context.Context, f TxOperationFunc) (err error) {
 		}
 		m := rc.RetryChecker.Check(unwrapErrBadConn(err))
 		if !m.MustRetry(retryNoIdempotent) {
-			return err
+			return fmt.Errorf("tx operation are non-retryable (attempts=%d, latency=%s): %w",
+				i, time.Since(start).String(), err,
+			)
 		}
 		if e := backoff(ctx, m, rc, i); e != nil {
 			break
 		}
 	}
-	return fmt.Errorf("retry tx operation failed after %d attempts: %v", i, err)
+	return fmt.Errorf("tx operation failed (attempts=%d, latency=%s): %w",
+		i, time.Since(start).String(), err,
+	)
 }
 
 func (d TxDoer) do(ctx context.Context, f TxOperationFunc) error {
