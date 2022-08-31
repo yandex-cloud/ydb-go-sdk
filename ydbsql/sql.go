@@ -245,6 +245,7 @@ func (c *conn) Ping(ctx context.Context) error {
 }
 
 func (c *conn) Close() error {
+	defer c.setClosed()
 	return c.session.Close(context.Background())
 }
 
