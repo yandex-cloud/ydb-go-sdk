@@ -292,7 +292,7 @@ func (c *connector) Connect(ctx context.Context) (_ driver.Conn, err error) {
 				connector: c,
 				session:   s,
 			}
-			s.OnClose(cc.onClose)
+			s.OnClose(cc.setClosed)
 			return cc, nil
 		}
 		m := ydb.DefaultRetryChecker.Check(err)

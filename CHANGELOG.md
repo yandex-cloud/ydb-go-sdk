@@ -1,3 +1,6 @@
+# 2.12.11
+* Stored session close flag if check in `ydbsql` returns `driver.ErrBadConn`
+
 # 2.12.10
 * Fixed error description in `ydbsql.TxDoer.Do`
 

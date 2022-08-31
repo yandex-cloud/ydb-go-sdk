@@ -36,6 +36,8 @@ func mapBadSessionError(err error) error {
 	}
 	m := (&ydb.RetryChecker{}).Check(err)
 	switch {
+	case errors.Is(err, driver.ErrBadConn):
+		return err
 	case
 		m.MustDeleteSession(),
 		ydb.IsOpError(err, ydb.StatusOverloaded),

@@ -31,18 +31,18 @@ type conn struct {
 
 	idle bool
 
-	closed int32
+	closed uint64
 
 	tx  *table.Transaction
 	txc *table.TransactionControl
 }
 
-func (c *conn) onClose() {
-	atomic.StoreInt32(&c.closed, 1)
+func (c *conn) setClosed() {
+	atomic.StoreUint64(&c.closed, 1)
 }
 
 func (c *conn) isClosed() bool {
-	return atomic.LoadInt32(&c.closed) != 0
+	return atomic.LoadUint64(&c.closed) != 0
 }
 
 func (c *conn) ResetSession(ctx context.Context) error {
@@ -116,6 +116,19 @@ func txIsolationOrControl(opts driver.TxOptions) (isolation table.TxOption, cont
 	)
 }
 
+func (c *conn) checkClosed(err error) error {
+	if c.isClosed() {
+		return driver.ErrBadConn
+	}
+	if err == nil {
+		return nil
+	}
+	if err = mapBadSessionError(err); errors.Is(err, driver.ErrBadConn) {
+		c.setClosed()
+	}
+	return err
+}
+
 func (c *conn) BeginTx(ctx context.Context, opts driver.TxOptions) (tx driver.Tx, err error) {
 	if c.isClosed() {
 		return nil, driver.ErrBadConn
@@ -130,7 +143,7 @@ func (c *conn) BeginTx(ctx context.Context, opts driver.TxOptions) (tx driver.Tx
 	if isolation != nil {
 		c.tx, err = c.session.BeginTransaction(ctx, table.TxSettings(isolation))
 		if err != nil {
-			return nil, mapBadSessionError(err)
+			return nil, c.checkClosed(err)
 		}
 		c.txc = table.TxControl(table.WithTx(c.tx))
 	} else {
@@ -204,7 +217,7 @@ func (c *conn) QueryContext(ctx context.Context, query string, args []driver.Nam
 func (c *conn) queryContext(ctx context.Context, query string, args []driver.NamedValue) (driver.Rows, error) {
 	res, err := c.exec(ctx, &reqQuery{text: query}, params(args))
 	if err != nil {
-		return nil, mapBadSessionError(err)
+		return nil, c.checkClosed(err)
 	}
 	res.NextSet()
 	return &rows{res: res}, mapBadSessionError(res.Err())
@@ -213,7 +226,7 @@ func (c *conn) queryContext(ctx context.Context, query string, args []driver.Nam
 func (c *conn) scanQueryContext(ctx context.Context, query string, args []driver.NamedValue) (driver.Rows, error) {
 	res, err := c.exec(ctx, &reqScanQuery{text: query}, params(args))
 	if err != nil {
-		return nil, mapBadSessionError(err)
+		return nil, c.checkClosed(err)
 	}
 	res.NextStreamSet(ctx)
 	return &stream{ctx: ctx, res: res}, mapBadSessionError(res.Err())
@@ -228,13 +241,11 @@ func (c *conn) Ping(ctx context.Context) error {
 		return driver.ErrBadConn
 	}
 	_, err := c.session.KeepAlive(ctx)
-	return mapBadSessionError(err)
+	return c.checkClosed(err)
 }
 
 func (c *conn) Close() error {
-	ctx := context.Background()
-	err := c.session.Close(ctx)
-	return mapBadSessionError(err)
+	return c.session.Close(context.Background())
 }
 
 func (c *conn) Prepare(string) (driver.Stmt, error) {
@@ -266,13 +277,13 @@ func (c *conn) exec(ctx context.Context, req processor, params *table.QueryParam
 		m = rc.RetryChecker.Check(err)
 
 		if m.MustDeleteSession() {
-			return nil, mapBadSessionError(err)
+			return nil, c.checkClosed(err)
 		}
 		if !m.MustRetry(retryNoIdempotent) {
 			break
 		}
 	}
-	return nil, mapBadSessionError(err)
+	return nil, c.checkClosed(err)
 }
 
 func (c *conn) txControl() *table.TransactionControl {
@@ -392,7 +403,7 @@ func (s *stmt) QueryContext(ctx context.Context, args []driver.NamedValue) (driv
 func (s *stmt) queryContext(ctx context.Context, args []driver.NamedValue) (driver.Rows, error) {
 	res, err := s.conn.exec(ctx, &reqStmt{stmt: s.stmt}, params(args))
 	if err != nil {
-		return nil, mapBadSessionError(err)
+		return nil, s.conn.checkClosed(err)
 	}
 	res.NextSet()
 	return &rows{res: res}, mapBadSessionError(res.Err())
@@ -401,7 +412,7 @@ func (s *stmt) queryContext(ctx context.Context, args []driver.NamedValue) (driv
 func (s *stmt) scanQueryContext(ctx context.Context, args []driver.NamedValue) (driver.Rows, error) {
 	res, err := s.conn.exec(ctx, &reqScanQuery{text: s.stmt.Text()}, params(args))
 	if err != nil {
-		return nil, mapBadSessionError(err)
+		return nil, s.conn.checkClosed(err)
 	}
 	res.NextStreamSet(ctx)
 	return &stream{ctx: ctx, res: res}, mapBadSessionError(res.Err())
