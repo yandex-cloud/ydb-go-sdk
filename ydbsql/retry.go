@@ -109,7 +109,7 @@ func (d TxDoer) Do(ctx context.Context, f TxOperationFunc) (err error) {
 		m := rc.RetryChecker.Check(unwrapErrBadConn(err))
 		if !m.MustRetry(retryNoIdempotent) {
 			return fmt.Errorf("tx operation are non-retryable (attempts=%d, latency=%s): %w",
-				i, time.Since(start).String(), err,
+				i+1, time.Since(start).String(), err,
 			)
 		}
 		if e := backoff(ctx, m, rc, i); e != nil {
@@ -117,7 +117,7 @@ func (d TxDoer) Do(ctx context.Context, f TxOperationFunc) (err error) {
 		}
 	}
 	return fmt.Errorf("tx operation failed (attempts=%d, latency=%s): %w",
-		i, time.Since(start).String(), err,
+		i+1, time.Since(start).String(), err,
 	)
 }
 
