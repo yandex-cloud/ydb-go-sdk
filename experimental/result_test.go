@@ -3,9 +3,8 @@ package experimental
 import (
 	"testing"
 
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
-
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/pb/protos/Ydb_Experimental"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 )
 
 func TestResultAny(t *testing.T) {

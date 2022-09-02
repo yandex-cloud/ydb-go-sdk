@@ -15,12 +15,11 @@ import (
 
 	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/ptypes/any"
+	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Discovery"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Operations"
 	"google.golang.org/grpc"
-
-	"github.com/yandex-cloud/ydb-go-sdk/v2"
 )
 
 type Handler func(ctx context.Context, req RequestParser) (res interface{}, err error)

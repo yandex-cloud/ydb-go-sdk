@@ -6,10 +6,9 @@ import (
 	"crypto/x509"
 	"time"
 
+	v1 "github.com/yandex-cloud/go-genproto/yandex/cloud/iam/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
-
-	v1 "github.com/yandex-cloud/go-genproto/yandex/cloud/iam/v1"
 )
 
 type grpcTransport struct {

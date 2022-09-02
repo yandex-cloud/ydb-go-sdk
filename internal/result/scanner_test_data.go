@@ -5,10 +5,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
-
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 )
 
 type column struct {

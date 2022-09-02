@@ -8,10 +8,9 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
-
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 )
 
 func valueFromPrimitiveTypeID(c *column) (*Ydb.Value, interface{}) {

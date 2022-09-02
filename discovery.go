@@ -3,12 +3,11 @@ package ydb
 import (
 	"context"
 
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Discovery"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Operations"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
-
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 )
 
 type Endpoint struct {

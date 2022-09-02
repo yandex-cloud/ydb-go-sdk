@@ -8,9 +8,8 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/ptypes"
-	"google.golang.org/grpc"
-
 	v1 "github.com/yandex-cloud/go-genproto/yandex/cloud/iam/v1"
+	"google.golang.org/grpc"
 )
 
 func TestGRPCCreateToken(t *testing.T) {

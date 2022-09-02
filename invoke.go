@@ -4,10 +4,9 @@ import (
 	"context"
 
 	"github.com/golang/protobuf/proto"
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 	"google.golang.org/grpc"
-
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 )
 
 func invoke(

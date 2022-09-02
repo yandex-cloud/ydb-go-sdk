@@ -12,12 +12,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
-
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/testutil"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/timeutil/timetest"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
 )
 
 func TestSessionPoolCreateAbnormalResult(t *testing.T) {

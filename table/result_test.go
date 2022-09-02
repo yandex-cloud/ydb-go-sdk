@@ -5,10 +5,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
-
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
 )
 
 func TestResultAny(t *testing.T) {

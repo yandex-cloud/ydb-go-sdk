@@ -9,14 +9,13 @@ import (
 
 	"github.com/golang/protobuf/proto"
 	"github.com/stretchr/testify/require"
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Scheme"
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
-
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/cache/lru"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/testutil"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Scheme"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
 )
 
 func TestSessionKeepAlive(t *testing.T) {

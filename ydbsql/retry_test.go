@@ -9,11 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
-
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/table"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/testutil"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
 )
 
 type DriverBuilder struct {

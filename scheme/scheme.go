@@ -3,10 +3,9 @@ package scheme
 import (
 	"context"
 
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Scheme"
-
 	ydb "github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Scheme"
 )
 
 type EntryType uint

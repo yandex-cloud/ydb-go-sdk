@@ -5,10 +5,9 @@ import (
 	"sync"
 	"time"
 
+	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/stats"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
-
-	"github.com/yandex-cloud/ydb-go-sdk/v2/internal/stats"
 )
 
 type conn struct {

@@ -3,10 +3,9 @@ package table
 import (
 	"time"
 
-	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
-
 	"github.com/yandex-cloud/ydb-go-sdk/v2"
 	"github.com/yandex-cloud/ydb-go-sdk/v2/internal"
+	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb_Table"
 )
 
 type SessionStatus byte
