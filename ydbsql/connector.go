@@ -2,6 +2,7 @@ package ydbsql
 
 import (
 	"context"
+	"crypto/tls"
 	"database/sql/driver"
 	"fmt"
 	"io"
@@ -65,6 +66,16 @@ func WithCredentials(creds ydb.Credentials) ConnectorOption {
 func WithDatabase(db string) ConnectorOption {
 	return func(c *connector) {
 		c.dialer.DriverConfig.Database = db
+	}
+}
+
+func withSecure(secure bool) ConnectorOption {
+	return func(c *connector) {
+		if secure {
+			c.dialer.TLSConfig = new(tls.Config)
+		} else {
+			c.dialer.TLSConfig = nil
+		}
 	}
 }
 

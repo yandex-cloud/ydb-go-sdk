@@ -6,6 +6,7 @@ import (
 	"database/sql/driver"
 	"io"
 	"log"
+	"net/url"
 	"os"
 	"reflect"
 	"testing"
@@ -151,7 +152,11 @@ func TestIsolationMapping(t *testing.T) {
 	}
 }
 
-func openDB(ctx context.Context) (*sql.DB, error) {
+func openDB(ctx context.Context, t *testing.T) (*sql.DB, error) {
+	if _, ok := os.LookupEnv("YDB_CONNECTION_STRING"); !ok {
+		t.Skip("need to be tested with docker")
+	}
+
 	var (
 		dtrace ydb.DriverTrace
 		ctrace table.ClientTrace
@@ -163,14 +168,18 @@ func openDB(ctx context.Context) (*sql.DB, error) {
 		log.Printf("[client] %s: %+v", name, traceutil.ClearContext(args))
 	})
 
+	u, err := url.Parse(os.Getenv("YDB_CONNECTION_STRING") + "&" + urlAuthToken + "=" + os.Getenv("YDB_ACCESS_TOKEN_CREDENTIALS"))
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	db := sql.OpenDB(Connector(
-		WithEndpoint("ydb-ru.yandex.net:2135"),
-		WithDatabase("/ru/home/kamardin/mydb"),
-		WithCredentials(ydb.AuthTokenCredentials{
-			AuthToken: os.Getenv("YDB_TOKEN"),
-		}),
-		WithDriverTrace(dtrace),
-		WithClientTrace(ctrace),
+		append([]ConnectorOption{
+			WithDriverTrace(dtrace),
+			WithClientTrace(ctrace),
+		},
+			urlConnectorOptions(u)...,
+		)...,
 	))
 
 	return db, db.PingContext(ctx)
@@ -274,8 +283,6 @@ func TestQuery(t *testing.T) {
 }
 
 func TestDatabaseSelect(t *testing.T) {
-	t.Skip("need to be tested with docker")
-
 	for _, test := range []struct {
 		query  string
 		params []interface{}
@@ -291,7 +298,7 @@ func TestDatabaseSelect(t *testing.T) {
 		defer cancel()
 
 		t.Run("exec", func(t *testing.T) {
-			db, err := openDB(ctx)
+			db, err := openDB(ctx, t)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -303,7 +310,7 @@ func TestDatabaseSelect(t *testing.T) {
 			log.Printf("result=%v", res)
 		})
 		t.Run("query", func(t *testing.T) {
-			db, err := openDB(ctx)
+			db, err := openDB(ctx, t)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -318,12 +325,10 @@ func TestDatabaseSelect(t *testing.T) {
 }
 
 func TestStatement(t *testing.T) {
-	t.Skip("need to be tested with docker")
-
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	db, err := openDB(ctx)
+	db, err := openDB(ctx, t)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -346,12 +351,10 @@ func TestStatement(t *testing.T) {
 }
 
 func TestTx(t *testing.T) {
-	t.Skip("need to be tested with docker")
-
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	db, err := openDB(ctx)
+	db, err := openDB(ctx, t)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -385,23 +388,21 @@ func TestTx(t *testing.T) {
 }
 
 func TestDriver(t *testing.T) {
-	t.Skip("need to be tested with docker")
-
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	db, err := openDB(ctx)
+	db, err := openDB(ctx, t)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer db.Close()
 
 	rows, err := db.QueryContext(ctx, `
-		DECLARE $seriesData AS "List<Struct<
+		DECLARE $seriesData AS List<Struct<
 			series_id: Uint64,
 			title: Utf8,
 			series_info: Utf8,
-			release_date: Date>>";
+			release_date: Date>>;
 
 		SELECT
 			series_id,

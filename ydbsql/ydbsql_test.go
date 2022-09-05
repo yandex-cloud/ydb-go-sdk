@@ -2,7 +2,6 @@ package ydbsql
 
 import (
 	"database/sql"
-	"fmt"
 	"net/url"
 	"os"
 	"testing"
@@ -57,12 +56,13 @@ func TestLegacyDriverValidateDataSourceURI(t *testing.T) {
 }
 
 func TestLegacyDriverOpen(t *testing.T) {
-	t.Skip("need to be tested with docker")
+	if _, ok := os.LookupEnv("YDB_CONNECTION_STRING"); !ok {
+		t.Skip("need to be tested with docker")
+	}
 
-	db, err := sql.Open("ydb/v2", fmt.Sprintf(
-		"ydb://ydb-ru.yandex.net:2135/ru/home/kamardin/mydb?auth-token=%s",
-		os.Getenv("YDB_TOKEN"),
-	))
+	db, err := sql.Open("ydb/v2",
+		os.Getenv("YDB_CONNECTION_STRING")+"&"+urlAuthToken+"="+os.Getenv("YDB_ACCESS_TOKEN_CREDENTIALS"),
+	)
 	if err != nil {
 		t.Fatal(err)
 	}

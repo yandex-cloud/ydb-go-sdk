@@ -117,12 +117,6 @@ func txIsolationOrControl(opts driver.TxOptions) (isolation table.TxOption, cont
 }
 
 func (c *conn) checkClosed(err error) error {
-	if c.isClosed() {
-		return driver.ErrBadConn
-	}
-	if err == nil {
-		return nil
-	}
 	if err = mapBadSessionError(err); errors.Is(err, driver.ErrBadConn) {
 		c.setClosed()
 	}

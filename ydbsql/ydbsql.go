@@ -32,36 +32,60 @@ func (d *legacyDriver) Open(name string) (driver.Conn, error) {
 }
 
 const (
-	urlAuthToken = "auth-token"
+	urlAuthToken  = "auth-token"
+	databaseToken = "database"
 )
 
 func urlConnectorOptions(u *url.URL) []ConnectorOption {
-	return []ConnectorOption{
+	opts := []ConnectorOption{
 		WithEndpoint(u.Host),
 		WithDatabase(u.Path),
+		withSecure(u.Scheme == secureScheme),
 		WithCredentials(ydb.AuthTokenCredentials{
 			AuthToken: u.Query().Get(urlAuthToken),
 		}),
 	}
+	database := u.Query().Get(databaseToken)
+	if database != "" {
+		opts = append(opts, WithDatabase(database))
+	}
+	return opts
+}
+
+var (
+	secureScheme = "grpcs"
+	validSchemas = []string{
+		"ydb",
+		"grpc",
+		secureScheme,
+	}
+)
+
+func isValidScheme(scheme string) bool {
+	for _, s := range validSchemas {
+		if s == scheme {
+			return true
+		}
+	}
+	return false
 }
 
 func validateURL(u *url.URL) error {
-	if s := u.Scheme; s != "ydb" {
-		return fmt.Errorf("malformed source uri: unexpected scheme: %q", s)
+	if !isValidScheme(u.Scheme) {
+		return fmt.Errorf("malformed source uri: unexpected scheme: %q", u.Scheme)
 	}
 	if u.Host == "" {
 		return fmt.Errorf("malformed source uri: empty host")
 	}
-	if u.Path == "" {
-		return fmt.Errorf("malformed source uri: empty database path")
+	if u.Path == "" && u.Query().Get(databaseToken) == "" {
+		return fmt.Errorf("malformed source uri: empty database")
 	}
 
 	var withToken bool
 	for key := range u.Query() {
-		if key != urlAuthToken {
-			return fmt.Errorf("malformed source uri: unexpected option: %q", key)
+		if key == urlAuthToken {
+			withToken = true
 		}
-		withToken = true
 	}
 	if !withToken {
 		return fmt.Errorf("malformed source uri: empty token")
