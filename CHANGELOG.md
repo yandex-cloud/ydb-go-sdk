@@ -1,3 +1,6 @@
+2.12.12
+* Fixed double wrapping in `ydbsql.TxDoer`
+
 # 2.12.11
 * Stored session close flag if check in `ydbsql` returns `driver.ErrBadConn`
 
