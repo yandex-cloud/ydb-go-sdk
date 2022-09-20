@@ -631,7 +631,7 @@ func ZeroValue(t T) Value {
 			panic("uncovered primitive type")
 		}
 
-	case OptionalType, VoidType:
+	case OptionalType, VoidType, NullType:
 		v.Value = new(Ydb.Value_NullFlagValue)
 
 	case ListType, TupleType, StructType, DictType:

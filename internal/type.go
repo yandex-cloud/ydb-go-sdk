@@ -2,6 +2,7 @@ package internal
 
 import (
 	"bytes"
+	"fmt"
 	"strconv"
 
 	"github.com/ydb-platform/ydb-go-genproto/protos/Ydb"
@@ -67,14 +68,17 @@ func TypeFromYDB(x *Ydb.Type) T {
 				S: StructType{StructFields(x.StructItems.Members)},
 			}
 		default:
-			panic("ydb: unkown variant type")
+			panic(fmt.Sprintf("ydb: unknown variant type '%+v'", x))
 		}
 
 	case *Ydb.Type_VoidType:
 		return VoidType{}
 
+	case *Ydb.Type_NullType:
+		return NullType{}
+
 	default:
-		panic("ydb: unknown type")
+		panic(fmt.Sprintf("ydb: unknown type '%+v'", x))
 	}
 }
 
@@ -467,6 +471,32 @@ var (
 		Type: &Ydb.Type_VoidType{},
 	}
 	optionalVoid = (OptionalType{VoidType{}}).toYDB()
+)
+
+type NullType struct{}
+
+func (v NullType) toYDB() *Ydb.Type {
+	return null
+}
+
+func (v NullType) String() string {
+	return "Null"
+}
+
+func (v NullType) equal(t T) bool {
+	_, ok := t.(NullType)
+	return ok
+}
+
+func (v NullType) toString(buf *bytes.Buffer) {
+	buf.WriteString(v.String())
+}
+
+var (
+	null = &Ydb.Type{
+		Type: &Ydb.Type_NullType{},
+	}
+	optionalNull = (OptionalType{NullType{}}).toYDB()
 )
 
 type OptionalType struct {
