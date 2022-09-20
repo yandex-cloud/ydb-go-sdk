@@ -1,3 +1,6 @@
+# 2.12.13
+* Supported the null type from `YDB`
+
 # 2.12.12
 * Fixed double wrapping in `ydbsql.TxDoer`
 
