@@ -184,21 +184,20 @@ func (s *Scanner) Err() error {
 // Any returns any primitive or optional value.
 // Currently, it may return one of these types:
 //
-//   bool
-//   int8
-//   uint8
-//   int16
-//   uint16
-//   int32
-//   uint32
-//   int64
-//   uint64
-//   float32
-//   float64
-//   []byte
-//   string
-//   [16]byte
-//
+//	bool
+//	int8
+//	uint8
+//	int16
+//	uint16
+//	int32
+//	uint32
+//	int64
+//	uint64
+//	float32
+//	float64
+//	[]byte
+//	string
+//	[16]byte
 func (s *Scanner) any() interface{} {
 	x := s.stack.current()
 	if s.err != nil || x.isEmpty() {
@@ -953,23 +952,25 @@ func (s *Scanner) ScanWithDefaults(values ...interface{}) error {
 
 // Scan values.
 // Input params - pointers to types:
-//   bool
-//   int8
-//   uint8
-//   int16
-//   uint16
-//   int32
-//   uint32
-//   int64
-//   uint64
-//   float32
-//   float64
-//   []byte
-//   [16]byte
-//   string
-//   time.Time
-//   time.Duration
-//   ydb.Value
+//
+//	bool
+//	int8
+//	uint8
+//	int16
+//	uint16
+//	int32
+//	uint32
+//	int64
+//	uint64
+//	float32
+//	float64
+//	[]byte
+//	[16]byte
+//	string
+//	time.Time
+//	time.Duration
+//	ydb.Value
+//
 // For custom types implement sql.Scanner interface.
 // For optional type use double pointer construction.
 // For unknown types use interface type.

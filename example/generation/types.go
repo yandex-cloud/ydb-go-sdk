@@ -10,6 +10,7 @@ import (
 //go:generate ydbgen
 
 // User represents a user of application.
+//
 //ydb:gen
 type User struct {
 	ID       uint64

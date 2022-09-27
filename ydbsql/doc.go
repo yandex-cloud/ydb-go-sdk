@@ -32,7 +32,8 @@ YDB endpoint server, and path for database name. Note that token parameter is
 required.
 
 Data source name parameters:
- token – access token to be used during requests (required).
+
+	token – access token to be used during requests (required).
 
 As you may notice, initialization via sql.Open() does not provide ability to
 setup tracing configuration.
@@ -88,6 +89,5 @@ of the cancelation appropriate timeout error will be returned. By default, this
 package "mirrors" context.Context deadlines and passes operation timeout option
 if context deadline is not empty. To configure or disable such behavior please
 see appropriate Connector options.
-
 */
 package ydbsql

@@ -14,18 +14,18 @@ import (
 // Use NextResultSet(), NextRow() and Scan() to advance through the result sets,
 // its rows and row's items.
 //
-//     res, err := s.Execute(ctx, txc, "SELECT ...")
-//     defer res.Close()
-//     for res.NextResultSet() {
-//         for res.NextRow() {
-//             var id int64
-//             var name *string //optional value
-//             res.Scan(&id,&name)
-//         }
-//     }
-//     if err := res.Err() { // get any error encountered during iteration
-//         // handle error
-//     }
+//	res, err := s.Execute(ctx, txc, "SELECT ...")
+//	defer res.Close()
+//	for res.NextResultSet() {
+//	    for res.NextRow() {
+//	        var id int64
+//	        var name *string //optional value
+//	        res.Scan(&id,&name)
+//	    }
+//	}
+//	if err := res.Err() { // get any error encountered during iteration
+//	    // handle error
+//	}
 //
 // If current value under scan
 // is not requested type, then res.Err() become non-nil.

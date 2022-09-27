@@ -39,16 +39,16 @@ func BigEndianUint128(hi, lo uint64) (v [16]byte) {
 // PrimitiveFromYDB returns a primitive value stored in x.
 // Currently it may return one of this types:
 //
-//   bool
-//   int32
-//   uint32
-//   int64
-//   uint64
-//   float32
-//   float64
-//   []byte
-//   string
-//   [16]byte
+//	bool
+//	int32
+//	uint32
+//	int64
+//	uint64
+//	float32
+//	float64
+//	[]byte
+//	string
+//	[16]byte
 //
 // Or nil.
 func PrimitiveFromYDB(x *Ydb.Value) (v interface{}) {

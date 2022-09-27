@@ -77,20 +77,20 @@ type TxDoer struct {
 // mind that f could be called again even if no error returned – transaction
 // commitment can be failed:
 //
-//   var results []int
-//   ydbsql.DoTx(ctx, db, TxOperationFunc(func(ctx context.Context, tx *sql.Tx) error {
-//       // Reset resulting slice to prevent duplicates when retry occured.
-//       results = results[:0]
+//	var results []int
+//	ydbsql.DoTx(ctx, db, TxOperationFunc(func(ctx context.Context, tx *sql.Tx) error {
+//	    // Reset resulting slice to prevent duplicates when retry occured.
+//	    results = results[:0]
 //
-//       rows, err := tx.QueryContext(...)
-//       if err != nil {
-//           // handle error
-//       }
-//       for rows.Next() {
-//           results = append(results, ...)
-//       }
-//       return rows.Err()
-//   }))
+//	    rows, err := tx.QueryContext(...)
+//	    if err != nil {
+//	        // handle error
+//	    }
+//	    for rows.Next() {
+//	        results = append(results, ...)
+//	    }
+//	    return rows.Err()
+//	}))
 func (d TxDoer) Do(ctx context.Context, f TxOperationFunc) (err error) {
 	var (
 		rc    = d.RetryConfig

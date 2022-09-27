@@ -10,9 +10,9 @@ import (
 // This type will be removed at next major release
 type Time time.Time
 
-//func (t Time) String() string {
-//	return time.Time(t).String()
-//}
+//	func (t Time) String() string {
+//		return time.Time(t).String()
+//	}
 func (t Time) Date() uint32 {
 	return internal.MarshalDate(time.Time(t))
 }
