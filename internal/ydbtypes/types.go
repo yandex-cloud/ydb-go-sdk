@@ -1,8 +1,7 @@
 /*
 Package ydbtypes provides tools for integration ydb types with go/types package.
 It is intended primarily for writing generation tools and linters.
-*/
-package ydbtypes
+*/package ydbtypes
 
 import (
 	"fmt"

@@ -1,7 +1,6 @@
 /*
 Package ydbtest provides tools for stubbing ydb server up.
-*/
-package ydbtest
+*/package ydbtest
 
 import (
 	"context"
