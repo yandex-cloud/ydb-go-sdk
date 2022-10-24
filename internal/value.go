@@ -383,12 +383,12 @@ func UTF8Value(v string) Value {
 		},
 	}
 }
-func YSONValue(v string) Value {
+func YSONValue(v []byte) Value {
 	return Value{
 		t: TypeYSON,
 		v: &Ydb.Value{
-			Value: &Ydb.Value_TextValue{
-				TextValue: v,
+			Value: &Ydb.Value_BytesValue{
+				BytesValue: v,
 			},
 		},
 	}

@@ -56,8 +56,8 @@ func TzTimestampValueFromTime(v time.Time) Value {
 func StringValue(v []byte) Value                { return internal.StringValue(v) }
 func StringValueFromString(v string) Value      { return internal.StringValue([]byte(v)) }
 func UTF8Value(v string) Value                  { return internal.UTF8Value(v) }
-func YSONValue(v string) Value                  { return internal.YSONValue(v) }
-func YSONValueFromBytes(v []byte) Value         { return internal.YSONValue(string(v)) }
+func YSONValue(v string) Value                  { return internal.YSONValue([]byte(v)) }
+func YSONValueFromBytes(v []byte) Value         { return internal.YSONValue(v) }
 func JSONValue(v string) Value                  { return internal.JSONValue(v) }
 func JSONValueFromBytes(v []byte) Value         { return internal.JSONValue(string(v)) }
 func UUIDValue(v [16]byte) Value                { return internal.UUIDValue(v) }

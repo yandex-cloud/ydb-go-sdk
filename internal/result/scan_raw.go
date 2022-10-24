@@ -393,11 +393,11 @@ func (s *Scanner) UTF8() (v string) {
 
 // Deprecated: Use Scan instead
 // Method will be available only for RawValue in the next major release
-func (s *Scanner) YSON() (v string) {
+func (s *Scanner) YSON() (v []byte) {
 	if s.err != nil || !s.assertCurrentTypePrimitive(Ydb.Type_YSON) {
 		return
 	}
-	return s.text()
+	return s.bytes()
 }
 
 // Deprecated: Use Scan instead
@@ -784,7 +784,9 @@ func (s *Scanner) Any() interface{} {
 		return s.float()
 	case internal.TypeDouble:
 		return s.double()
-	case internal.TypeString:
+	case
+		internal.TypeYSON,
+		internal.TypeString:
 		return s.bytes()
 	case internal.TypeUUID:
 		return s.uint128()
@@ -806,7 +808,6 @@ func (s *Scanner) Any() interface{} {
 		internal.TypeTzDatetime,
 		internal.TypeTzTimestamp,
 		internal.TypeUTF8,
-		internal.TypeYSON,
 		internal.TypeJSON,
 		internal.TypeJSONDocument,
 		internal.TypeDyNumber:

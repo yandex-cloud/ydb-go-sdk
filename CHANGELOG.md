@@ -1,3 +1,6 @@
+# 2.12.14
+* Fixed bug with converting `YSON` value to protobuf
+
 # 2.12.13
 * Supported the null type from `YDB`
 
