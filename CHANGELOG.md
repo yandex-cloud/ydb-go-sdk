@@ -1,3 +1,6 @@
+# 2.12.15
+* Add `EntryColumnTable` for schema enum
+
 # 2.12.14
 * Fixed bug with converting `YSON` value to protobuf
 

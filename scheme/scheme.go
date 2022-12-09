@@ -19,6 +19,7 @@ const (
 	EntryRtmrVolume
 	EntryBlockStoreVolume
 	EntryCoordinationNode
+	EntryColumnTable
 )
 
 func (t EntryType) String() string {
@@ -39,6 +40,8 @@ func (t EntryType) String() string {
 		return "BlockStoreVolume"
 	case EntryCoordinationNode:
 		return "CoordinationNode"
+	case EntryColumnTable:
+		return "ColumnTable"
 	}
 }
 
