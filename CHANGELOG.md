@@ -1,3 +1,6 @@
+# 2.12.16
+* Add `EntryColumnStore` for schema enum
+
 # 2.12.15
 * Add `EntryColumnTable` for schema enum
 
