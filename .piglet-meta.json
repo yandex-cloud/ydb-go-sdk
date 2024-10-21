@@ -1,3 +1,4 @@
 {
-  "project":"ydb-go-sdk"
+  "project":"ydb-go-sdk",
+  "repository":"arcadia"
 }
