@@ -1,4 +1,5 @@
 {
+  ".github/":"kikimr/public/sdk/go/ydb/.github/",
   ".github/ISSUE_TEMPLATE/01_BUG_REPORT.md":"kikimr/public/sdk/go/ydb/.github/ISSUE_TEMPLATE/01_BUG_REPORT.md",
   ".github/ISSUE_TEMPLATE/02_FEATURE_REQUEST.md":"kikimr/public/sdk/go/ydb/.github/ISSUE_TEMPLATE/02_FEATURE_REQUEST.md",
   ".github/ISSUE_TEMPLATE/03_CODEBASE_IMPROVEMENT.md":"kikimr/public/sdk/go/ydb/.github/ISSUE_TEMPLATE/03_CODEBASE_IMPROVEMENT.md",
@@ -30,6 +31,7 @@
   "cmd/ydbgen/generation_data_test.go":"kikimr/public/sdk/go/ydb/cmd/ydbgen/generation_data_test.go",
   "cmd/ydbgen/generation_test.go":"kikimr/public/sdk/go/ydb/cmd/ydbgen/generation_test.go",
   "cmd/ydbgen/main.go":"kikimr/public/sdk/go/ydb/cmd/ydbgen/main.go",
+  "cmd/ydbgen/tests/":"kikimr/public/sdk/go/ydb/cmd/ydbgen/tests/",
   "cmd/ydbgen/tests/all.go":"kikimr/public/sdk/go/ydb/cmd/ydbgen/tests/all.go",
   "cmd/ydbgen/tests/container.go":"kikimr/public/sdk/go/ydb/cmd/ydbgen/tests/container.go",
   "cmd/ydbgen/tests/container_ydbgen.go":"kikimr/public/sdk/go/ydb/cmd/ydbgen/tests/container_ydbgen.go",
