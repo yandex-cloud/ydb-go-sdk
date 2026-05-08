@@ -91,10 +91,10 @@ func TestClientToken(t *testing.T) {
 				t.Errorf("unexpected claims.Audience field: %+q; want %+q", act, exp)
 			}
 			if act, exp := claims.IssuedAt, iat; act != exp {
-				t.Errorf("unexpected claims.IssuedAt field: %+q; want %+q", act, exp)
+				t.Errorf("unexpected claims.IssuedAt field: %d; want %d", act, exp)
 			}
 			if act, exp := claims.ExpiresAt, exp; act != exp {
-				t.Errorf("unexpected claims.ExpiresAt field: %+q; want %+q", act, exp)
+				t.Errorf("unexpected claims.ExpiresAt field: %d; want %d", act, exp)
 			}
 
 			t := results[i].token
