@@ -24,26 +24,26 @@ type templateConfig struct {
 var fill = template.Must(template.New("fill database").Parse(`
 PRAGMA TablePathPrefix("{{ .TablePathPrefix }}");
 
-DECLARE $seriesData AS "List<Struct<
+DECLARE $seriesData AS List<Struct<
 	series_id: Uint64,
 	title: Utf8,
 	series_info: Utf8,
 	release_date: Date,
-	comment: Optional<Utf8>>>";
+	comment: Optional<Utf8>>>;
 
-DECLARE $seasonsData AS "List<Struct<
+DECLARE $seasonsData AS List<Struct<
 	series_id: Uint64,
 	season_id: Uint64,
 	title: Utf8,
 	first_aired: Date,
-	last_aired: Date>>";
+	last_aired: Date>>;
 
-DECLARE $episodesData AS "List<Struct<
+DECLARE $episodesData AS List<Struct<
 	series_id: Uint64,
 	season_id: Uint64,
 	episode_id: Uint64,
 	title: Utf8,
-	air_date: Date>>";
+	air_date: Date>>;
 
 REPLACE INTO series
 SELECT
